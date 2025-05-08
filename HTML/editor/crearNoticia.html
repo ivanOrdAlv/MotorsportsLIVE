@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotorsportLIVE - Crear Noticia</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Quill Editor CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../CSS/estilos.css">
+    <link rel="stylesheet" href="../../CSS/crearNoticia.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">MotorsportLIVE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../noticias/noticias.html">Noticias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../eventos/eventos.html">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pilotos/todosPilotos.html">Pilotos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../equipos/todosEquipos.html">Equipos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                            <li><a class="dropdown-item" href="crearTemporada.html">Crear Temporada</a></li>
+                            <li><a class="dropdown-item" href="crearEvento.html">Crear Evento</a></li>
+                            <li><a class="dropdown-item active" href="crearNoticia.html">Crear Noticia</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Crear Nueva Noticia</h1>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form id="noticiaForm">
+                            <!-- Título y Subtítulo -->
+                            <div class="mb-4">
+                                <label for="titulo" class="form-label">Título <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="titulo" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="subtitulo" class="form-label">Subtítulo</label>
+                                <input type="text" class="form-control" id="subtitulo">
+                            </div>
+
+                            <!-- Categoría -->
+                            <div class="mb-4">
+                                <label for="categoria" class="form-label">Categoría <span class="text-danger">*</span></label>
+                                <select class="form-select" id="categoria" required>
+                                    <option value="" selected disabled>Selecciona una categoría</option>
+                                    <option value="formula1">Fórmula 1</option>
+                                    <option value="motogp">MotoGP</option>
+                                    <option value="wrc">WRC</option>
+                                    <option value="wec">WEC</option>
+                                    <option value="indycar">IndyCar</option>
+                                    <option value="formula-e">Fórmula E</option>
+                                    <option value="nascar">NASCAR</option>
+                                    <option value="dtm">DTM</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+
+                            <!-- Imagen Principal -->
+                            <div class="mb-4">
+                                <label class="form-label">Imagen Principal <span class="text-danger">*</span></label>
+                                <div class="image-upload-container">
+                                    <div class="image-preview" id="imagenPrincipalPreview">
+                                        <div class="upload-placeholder">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Haz clic o arrastra una imagen aquí</p>
+                                        </div>
+                                    </div>
+                                    <input type="file" class="form-control d-none" id="imagenPrincipal" accept="image/*" required>
+                                    <button type="button" class="btn btn-outline-primary mt-2" id="selectImagenPrincipal">Seleccionar Imagen</button>
+                                </div>
+                            </div>
+
+                            <!-- Imágenes Adicionales -->
+                            <div class="mb-4">
+                                <label class="form-label">Imágenes Adicionales (Máximo 2)</label>
+                                <div class="row" id="imagenesAdicionalesContainer">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="image-upload-container">
+                                            <div class="image-preview" id="imagenAdicional1Preview">
+                                                <div class="upload-placeholder">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                    <p>Imagen adicional 1</p>
+                                                </div>
+                                            </div>
+                                            <input type="file" class="form-control d-none" id="imagenAdicional1" accept="image/*">
+                                            <button type="button" class="btn btn-outline-secondary mt-2" id="selectImagenAdicional1">Seleccionar Imagen</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="image-upload-container">
+                                            <div class="image-preview" id="imagenAdicional2Preview">
+                                                <div class="upload-placeholder">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                    <p>Imagen adicional 2</p>
+                                                </div>
+                                            </div>
+                                            <input type="file" class="form-control d-none" id="imagenAdicional2" accept="image/*">
+                                            <button type="button" class="btn btn-outline-secondary mt-2" id="selectImagenAdicional2">Seleccionar Imagen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contenido -->
+                            <div class="mb-4">
+                                <label class="form-label">Contenido <span class="text-danger">*</span></label>
+                                <div id="editor-container" class="quill-editor"></div>
+                                <input type="hidden" id="contenido">
+                            </div>
+
+                            <!-- Enlaces de Referencia -->
+                            <div class="mb-4">
+                                <label class="form-label">Enlaces de Referencia</label>
+                                <div id="enlaces-container">
+                                    <div class="enlace-item mb-2 d-flex">
+                                        <input type="text" class="form-control me-2" placeholder="Título del enlace" name="enlace-titulo[]">
+                                        <input type="url" class="form-control me-2" placeholder="URL" name="enlace-url[]">
+                                        <button type="button" class="btn btn-danger remove-enlace"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-secondary mt-2" id="add-enlace">
+                                    <i class="fas fa-plus"></i> Añadir Enlace
+                                </button>
+                            </div>
+
+                            <!-- Autor y Fecha -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="autor" class="form-label">Autor <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="autor" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="fecha" class="form-label">Fecha de Publicación</label>
+                                    <input type="datetime-local" class="form-control" id="fecha">
+                                </div>
+                            </div>
+
+                            <!-- Botones de Acción -->
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary" id="previewBtn">Vista Previa</button>
+                                <div>
+                                    <button type="button" class="btn btn-outline-primary me-2" id="guardarBorrador">Guardar como Borrador</button>
+                                    <button type="submit" class="btn btn-primary">Publicar Noticia</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Vista Previa -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Vista Previa de la Noticia</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="preview-container">
+                        <h1 id="preview-titulo"></h1>
+                        <h3 id="preview-subtitulo" class="text-muted"></h3>
+                        <div class="d-flex justify-content-between my-3">
+                            <span id="preview-categoria" class="badge bg-primary"></span>
+                            <div>
+                                <span id="preview-autor"></span> | 
+                                <span id="preview-fecha"></span>
+                            </div>
+                        </div>
+                        <div class="preview-imagen-principal mb-4"></div>
+                        <div id="preview-contenido" class="mb-4"></div>
+                        <div class="row" id="preview-imagenes-adicionales"></div>
+                        <div id="preview-enlaces" class="mt-4">
+                            <h5>Enlaces de Referencia:</h5>
+                            <ul class="list-group"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>MotorsportLIVE</h5>
+                    <p>Tu fuente de información sobre deportes de motor.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-white">Inicio</a></li>
+                        <li><a href="../noticias/noticias.html" class="text-white">Noticias</a></li>
+                        <li><a href="../eventos/eventos.html" class="text-white">Eventos</a></li>
+                        <li><a href="../pilotos/todosPilotos.html" class="text-white">Pilotos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contacto</h5>
+                    <p>Email: info@motorsportlive.com</p>
+                    <p>Teléfono: +34 123 456 789</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2025 MotorsportLIVE. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Quill Editor JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../JS/crearNoticia.js"></script>
+</body>
+</html>

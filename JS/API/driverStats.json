@@ -1,0 +1,47 @@
+{
+  "1": {
+    "wins": 105,
+    "podiums": 202,
+    "points": 4820.5,
+    "polePositions": 104,
+    "fastestLaps": 66,
+    "totalRaces": 356,
+    "bestChampionshipPosition": 1
+  },
+  "2": {
+    "totalRaces": 184,
+    "wins": 0,
+    "podiums": 13,
+    "points": 259,
+    "polePositions": 1,
+    "fastestLaps": 2,
+    "bestChampionshipPosition": 2
+  },
+  "3": {
+    "totalRaces": 206,
+    "wins": 23,
+    "podiums": 57,
+    "points": 1594.5,
+    "polePositions": 30,
+    "fastestLaps": 20,
+    "bestChampionshipPosition": 1
+  },
+  "863": {
+    "wins": 1,
+    "podiums": 1,
+    "points": 12,
+    "polePositions": 1,
+    "fastestLaps": 1,
+    "totalRaces": 2,
+    "bestChampionshipPosition": 1
+  },
+  "864": {
+    "totalRaces": 0,
+    "wins": 0,
+    "podiums": 0,
+    "points": 0,
+    "polePositions": 0,
+    "fastestLaps": 0,
+    "bestChampionshipPosition": "N/A"
+  }
+}

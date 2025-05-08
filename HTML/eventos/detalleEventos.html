@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalles del Circuito - MotorsportLIVE</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <style>
+      :root {
+        --motorsport-red: #e10600;
+        --motorsport-dark: #121212;
+      }
+
+      .bg-motorsport {
+        background-color: var(--motorsport-red);
+      }
+
+      .text-motorsport {
+        color: var(--motorsport-red);
+      }
+
+      .btn-motorsport {
+        background-color: var(--motorsport-red);
+        color: white;
+        border: none;
+      }
+
+      .btn-motorsport:hover {
+        background-color: #c10500;
+        color: white;
+      }
+
+      .navbar {
+        background-color: var(--motorsport-dark) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+
+      .nav-link {
+        font-weight: 500;
+      }
+
+      .nav-link:hover {
+        color: var(--motorsport-red) !important;
+      }
+
+      .circuit-header {
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+        position: relative;
+      }
+
+      .circuit-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+        z-index: 1;
+      }
+
+      .circuit-header-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .circuit-stats {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: -50px;
+        position: relative;
+        z-index: 3;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 15px 10px;
+        border-right: 1px solid #e9ecef;
+      }
+
+      .stat-item:last-child {
+        border-right: none;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--motorsport-red);
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+      }
+
+      .circuit-map {
+        height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .circuit-layout {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      footer {
+        background-color: var(--motorsport-dark);
+        color: white;
+        padding: 20px 0;
+        margin-top: 50px;
+      }
+
+      @media (max-width: 768px) {
+        .stat-item {
+          border-right: none;
+          border-bottom: 1px solid #e9ecef;
+          padding: 10px;
+        }
+
+        .stat-item:last-child {
+          border-bottom: none;
+        }
+
+        .circuit-stats {
+          margin-top: -30px;
+        }
+
+        .circuit-header {
+          padding: 60px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="../index.html">MotorsportLIVE</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.html"
+                ><i class="bi bi-house-fill"></i> Inicio</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/HTML/eventos/todosEventos.html"
+                ><i class="bi bi-calendar-event"></i> Eventos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/HTML/equipos/todosEquipos.html"
+                ><i class="bi bi-people-fill"></i> Equipos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/HTML/pilotos/todosPilotos.html"
+                ><i class="bi bi-person-circle"></i> Pilotos</a
+              >
+            </li>
+          </ul>
+          <form class="d-flex me-2">
+            <div class="input-group">
+              <input
+                class="form-control"
+                type="search"
+                placeholder="Buscar..."
+                aria-label="Buscar"
+              />
+              <button class="btn btn-outline-light" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
+          <button
+            class="btn btn-motorsport"
+            data-bs-toggle="modal"
+            data-bs-target="#loginModal"
+          >
+            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div id="circuit-details-container">
+      <!-- El contenido se cargará dinámicamente con JavaScript -->
+      <div class="text-center my-5">
+        <div class="spinner-border text-motorsport" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando detalles del circuito...</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-3 mb-md-0">
+            <h5>MotorsportLIVE</h5>
+            <p class="text-muted">
+              Tu portal de noticias y resultados de deportes de motor en tiempo
+              real.
+            </p>
+          </div>
+          <div class="col-md-2 mb-3 mb-md-0">
+            <h6>Enlaces</h6>
+            <ul class="list-unstyled">
+              <li>
+                <a href="../index.html" class="text-decoration-none text-muted"
+                  >Inicio</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/HTML/eventos/todosEventos.html"
+                  class="text-decoration-none text-muted"
+                  >Eventos</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/HTML/equipos/todosEquipos.html"
+                  class="text-decoration-none text-muted"
+                  >Equipos</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/HTML/pilotos/todosPilotos.html"
+                  class="text-decoration-none text-muted"
+                  >Pilotos</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-2 mb-3 mb-md-0">
+            <h6>Categorías</h6>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Formula 1</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">MotoGP</a>
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted">WRC</a>
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-muted"
+                  >Formula E</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h6>Suscríbete</h6>
+            <p class="text-muted">Recibe las últimas noticias en tu correo</p>
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Tu email" />
+              <button class="btn btn-motorsport" type="button">Enviar</button>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" />
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">
+              © 2025 MotorsportLIVE - Todos los derechos reservados
+            </p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <a href="#" class="text-decoration-none text-muted me-3"
+              ><i class="bi bi-facebook"></i
+            ></a>
+            <a href="#" class="text-decoration-none text-muted me-3"
+              ><i class="bi bi-twitter-x"></i
+            ></a>
+            <a href="#" class="text-decoration-none text-muted me-3"
+              ><i class="bi bi-instagram"></i
+            ></a>
+            <a href="#" class="text-decoration-none text-muted"
+              ><i class="bi bi-youtube"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const container = document.getElementById("circuit-details-container");
+
+        // Obtener el ID del circuito de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const circuitId = urlParams.get("id");
+
+        if (!circuitId) {
+          container.innerHTML = `
+                    <div class="container my-5">
+                        <div class="alert alert-warning" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i> No se especificó un ID de circuito.
+                        </div>
+                        <a href="../index.html" class="btn btn-motorsport">
+                            <i class="bi bi-arrow-left"></i> Volver a la página principal
+                        </a>
+                    </div>
+                `;
+          return;
+        }
+
+        try {
+          // Intentar obtener los detalles técnicos primero
+          let circuito;
+
+          try {
+  // Primero intentamos obtener los detalles completos
+  const detailsResponse = await fetch(`http://localhost:3000/circuitos/${circuitId}/details`);
+  if (detailsResponse.ok) {
+    circuito = await detailsResponse.json();
+    console.log("Detalles completos del circuito cargados:", circuito);
+  } else {
+    // Si falla, obtenemos la información básica y la complementamos
+    const basicResponse = await fetch(`http://localhost:3000/circuitos/${circuitId}`);
+    if (!basicResponse.ok) {
+      throw new Error(`Error HTTP: ${basicResponse.status}`);
+    }
+    circuito = await basicResponse.json();
+    
+    // Asegurarnos de que tenemos las propiedades mínimas necesarias
+    if (typeof circuito.lat === 'undefined' || typeof circuito.lng === 'undefined') {
+      console.warn("Coordenadas no encontradas en datos básicos, usando valores por defecto");
+      circuito.lat = circuito.lat || 0; // Valor por defecto o usa uno específico
+      circuito.lng = circuito.lng || 0; // Valor por defecto o usa uno específico
+    }
+    
+    console.log("Información básica del circuito cargada:", circuito);
+  }
+} catch (error) {
+            console.error(
+              "Error al cargar detalles, intentando información básica:",
+              error
+            );
+            const response = await fetch(
+              `http://localhost:3000/circuitos/${circuitId}`
+            );
+            if (!response.ok) {
+              throw new Error(`Error HTTP: ${response.status}`);
+            }
+            circuito = await response.json();
+            console.log("Información básica del circuito cargada:", circuito);
+          }
+
+          // Determinar la categoría
+          let categoria = circuito.category || "F1"; // Usar la categoría del circuito si está disponible
+
+          // Función para formatear un valor o mostrar "No disponible"
+          function formatValue(
+            value,
+            suffix = "",
+            defaultValue = "No disponible"
+          ) {
+            if (value === null || value === undefined || value === "") {
+              return defaultValue;
+            }
+            return `${value}${suffix}`;
+          }
+
+          // Extraer el ID de YouTube si existe
+          function getYoutubeEmbedUrl(url) {
+            if (!url) return null;
+
+            // Intentar extraer el ID de YouTube de diferentes formatos de URL
+            let videoId = null;
+
+            // Formato: https://www.youtube.com/watch?v=VIDEO_ID
+            const watchMatch = url.match(/youtube\.com\/watch\?v=([^&]+)/);
+            if (watchMatch) {
+              videoId = watchMatch[1];
+            }
+
+            // Formato: https://youtu.be/VIDEO_ID
+            const shortMatch = url.match(/youtu\.be\/([^?]+)/);
+            if (shortMatch) {
+              videoId = shortMatch[1];
+            }
+
+            // Formato: https://www.youtube.com/embed/VIDEO_ID
+            const embedMatch = url.match(/youtube\.com\/embed\/([^?]+)/);
+            if (embedMatch) {
+              videoId = embedMatch[1];
+            }
+
+            if (videoId) {
+              return `https://www.youtube.com/embed/${videoId}`;
+            }
+
+            return null;
+          }
+
+         
+          console.log("Coordenadas del circuito:", {
+            lat: circuito.lat,
+            lng: circuito.lng,
+            latType: typeof circuito.lat,
+            lngType: typeof circuito.lng,
+          });
+
+          // Generar HTML para los detalles del circuito
+          let headerImage =
+            circuito.heroImage ||
+            `https://source.unsplash.com/1600x900/?racing,${circuito.name.replace(
+              /\s+/g,
+              ","
+            )}`;
+
+          container.innerHTML = `
+                    <div class="circuit-header" style="background-image: url('${headerImage}')">
+                        <div class="container circuit-header-content">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="../index.html" class="text-white">Inicio</a></li>
+                                    <li class="breadcrumb-item"><a href="/HTML/eventos/todosEventos.html" class="text-white">Circuitos</a></li>
+                                    <li class="breadcrumb-item active text-white" aria-current="page">${
+                                      circuito.name
+                                    }</li>
+                                </ol>
+                            </nav>
+                            <h1 class="display-4 fw-bold">${circuito.name}</h1>
+                            <p class="lead">${circuito.location}, ${
+            circuito.country
+          }</p>
+                            <span class="badge bg-motorsport">${categoria}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="container">
+                        <div class="row circuit-stats">
+                            <div class="col-6 col-md-3 stat-item">
+                                <div class="stat-value">${formatValue(
+                                  circuito.length,
+                                  " km",
+                                  "-"
+                                )}</div>
+                                <div class="stat-label">Longitud</div>
+                            </div>
+                            <div class="col-6 col-md-3 stat-item">
+                                <div class="stat-value">${formatValue(
+                                  circuito.turns,
+                                  "",
+                                  "-"
+                                )}</div>
+                                <div class="stat-label">Curvas</div>
+                            </div>
+                            <div class="col-6 col-md-3 stat-item">
+                                <div class="stat-value">${formatValue(
+                                  circuito.maxSpeed,
+                                  " km/h",
+                                  "-"
+                                )}</div>
+                                <div class="stat-label">Velocidad máxima</div>
+                            </div>
+                            <div class="col-6 col-md-3 stat-item">
+                                <div class="stat-value">${formatValue(
+                                  circuito.lapRecord,
+                                  "",
+                                  "-"
+                                )}</div>
+                                <div class="stat-label">Vuelta récord</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-6 mb-4">
+                                <h3>Acerca del circuito</h3>
+                                ${
+                                  circuito.description
+                                    ? `<p>${circuito.description}</p>`
+                                    : `<p>
+                                        El ${circuito.name} es uno de los circuitos del calendario de ${categoria}. 
+                                        Ubicado en ${circuito.location}, ${circuito.country}, este trazado ofrece
+                                        una experiencia única para pilotos y aficionados.
+                                    </p>
+                                    <p>
+                                        Con una combinación de curvas rápidas y lentas, este circuito pone a prueba tanto la 
+                                        habilidad de los pilotos como la configuración de los vehículos, ofreciendo siempre 
+                                        un espectáculo emocionante para los aficionados.
+                                    </p>`
+                                }
+                                
+                                <h4 class="mt-4">Características técnicas</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Año de inauguración
+                                        <span class="badge bg-secondary rounded-pill">${formatValue(
+                                          circuito.inauguratedYear,
+                                          "",
+                                          "-"
+                                        )}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Capacidad
+                                        <span class="badge bg-secondary rounded-pill">${formatValue(
+                                          circuito.capacity,
+                                          " espectadores",
+                                          "-"
+                                        )}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Zonas DRS
+                                        <span class="badge bg-secondary rounded-pill">${formatValue(
+                                          circuito.drsZones,
+                                          "",
+                                          "-"
+                                        )}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Piloto con vuelta récord
+                                        <span class="badge bg-secondary rounded-pill">${formatValue(
+                                          circuito.lapRecordHolder,
+                                          "",
+                                          "-"
+                                        )}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Altitud
+                                        <span class="badge bg-secondary rounded-pill">${formatValue(
+                                          circuito.alt,
+                                          " m",
+                                          "-"
+                                        )}</span>
+                                    </li>
+                                </ul>
+                                
+                                ${
+                                  circuito.circuitLayout
+                                    ? `<h4 class="mt-4">Trazado del circuito</h4>
+                                    <img src="${circuito.circuitLayout}" alt="Trazado de ${circuito.name}" class="circuit-layout img-fluid">`
+                                    : ""
+                                }
+                                
+                                <div class="mt-4">
+                                    ${
+                                      circuito.url
+                                        ? `<a href="${circuito.url}" target="_blank" class="btn btn-outline-dark">
+                                            <i class="bi bi-info-circle"></i> Sitio oficial
+                                        </a>`
+                                        : ""
+                                    }
+                                    <a href="/HTML/resultados/resultados.html?id=${
+                                      circuito.circuitId
+                                    }" class="btn btn-motorsport">
+                                        <i class="bi bi-trophy"></i> Ver resultados
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Ubicación</h3>
+                                <div class="circuit-map">
+                                    <iframe 
+                                        width="100%" 
+                                        height="100%" 
+                                        frameborder="0" 
+                                        scrolling="no" 
+                                        marginheight="0" 
+                                        marginwidth="0" 
+                                        src="https://maps.google.com/maps?q=${
+                                          circuito.lat
+                                        },${circuito.lng}&z=14&output=embed"
+                                    ></iframe>
+                                </div>
+                                
+                                ${
+                                  circuito.videoUrl &&
+                                  getYoutubeEmbedUrl(circuito.videoUrl)
+                                    ? `<h4 class="mt-4">Video del circuito</h4>
+                                    <div class="video-container">
+                                        <iframe 
+                                            src="${getYoutubeEmbedUrl(
+                                              circuito.videoUrl
+                                            )}" 
+                                            title="Video de ${circuito.name}" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen
+                                        ></iframe>
+                                    </div>`
+                                    : ""
+                                }
+                                
+                                <div class="mt-4">
+                                    <h4>Próximos eventos</h4>
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">Gran Premio de ${
+                                                  circuito.country
+                                                }</h5>
+                                                <small>15-17 Abr 2025</small>
+                                            </div>
+                                            <p class="mb-1">${categoria}</p>
+                                        </a>
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">Test de pretemporada</h5>
+                                                <small>10-12 Feb 2025</small>
+                                            </div>
+                                            <p class="mb-1">${categoria}</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+          // Actualizar el título de la página
+          document.title = `${circuito.name} - MotorsportLIVE`;
+        } catch (error) {
+          console.error("Error al cargar los detalles del circuito:", error);
+          container.innerHTML = `
+                    <div class="container my-5">
+                        <div class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Error al cargar los detalles del circuito: ${error.message}
+                            <p class="mt-2 small">Asegúrate de que el servidor API esté funcionando en http://localhost:3000</p>
+                        </div>
+                        <a href="/index.html" class="btn btn-motorsport">
+                            <i class="bi bi-arrow-left"></i> Volver a la página principal
+                        </a>
+                    </div>
+                `;
+        }
+      });
+    </script>
+  </body>
+</html>

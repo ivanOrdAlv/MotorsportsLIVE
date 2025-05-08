@@ -1,0 +1,290 @@
+/* Estilos para la página de noticias */
+
+/* Header de noticias */
+.noticias-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../assets/noticias-header.jpg");
+    background-size: cover;
+    background-position: center;
+    padding: 4rem 0;
+    margin-bottom: 2rem;
+  }
+  
+  /* Tarjetas de noticias */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .noticia-destacada {
+    margin-bottom: 2rem;
+  }
+  
+  .noticia-destacada .card-img {
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .noticia-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  
+  .noticia-badge.formula1 {
+    background-color: #e10600;
+    color: white;
+  }
+  
+  .noticia-badge.motogp {
+    background-color: #0d2c54;
+    color: white;
+  }
+  
+  .noticia-badge.wrc {
+    background-color: #ff6b00;
+    color: white;
+  }
+  
+  .noticia-badge.wec {
+    background-color: #005a9c;
+    color: white;
+  }
+  
+  .noticia-badge.indycar {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .noticia-badge.otros {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .noticia-fecha {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+  
+  .noticia-autor {
+    font-style: italic;
+    color: #495057;
+  }
+  
+  /* Filtros */
+  #categoriasFiltros .btn {
+    border-radius: 50px;
+    padding: 0.375rem 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  #categoriasFiltros .btn.active {
+    background-color: #0d6efd;
+    color: white;
+    font-weight: 500;
+  }
+  
+  /* Paginación */
+  .pagination .page-link {
+    color: #0d6efd;
+    border-radius: 0;
+    margin: 0 2px;
+  }
+  
+  .pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+  
+  /* Skeleton loaders */
+  .skeleton-loader .skeleton-image {
+    height: 200px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .noticia-destacada .skeleton-image {
+    height: 400px;
+  }
+  
+  .skeleton-badge {
+    width: 80px;
+    height: 20px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 50px;
+  }
+  
+  .skeleton-title {
+    width: 90%;
+    height: 28px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .skeleton-subtitle {
+    width: 70%;
+    height: 20px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .skeleton-text {
+    width: 100%;
+    height: 16px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .skeleton-date {
+    width: 120px;
+    height: 16px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  .skeleton-button {
+    width: 100px;
+    height: 36px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 767.98px) {
+    .noticias-header {
+      padding: 3rem 0;
+    }
+  
+    .noticia-destacada .card-img {
+      height: 250px;
+    }
+  
+    #categoriasFiltros {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      flex-wrap: nowrap;
+    }
+  
+    #categoriasFiltros .btn {
+      white-space: nowrap;
+    }
+  }
+  
+  /* Detalle de noticia */
+  .noticia-detalle-header {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+  }
+  
+  .noticia-detalle-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .noticia-detalle-header-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 2rem;
+    color: white;
+  }
+  
+  .noticia-contenido {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  .noticia-contenido img {
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .noticia-contenido blockquote {
+    border-left: 4px solid #0d6efd;
+    padding-left: 1rem;
+    margin-left: 0;
+    color: #495057;
+    font-style: italic;
+  }
+  
+  .noticia-galeria {
+    margin: 2rem 0;
+  }
+  
+  .noticia-galeria-item {
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .noticia-galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .noticia-galeria-item:hover img {
+    transform: scale(1.05);
+  }
+  
+  .noticia-referencias {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+  
+  .noticia-referencias ul {
+    margin-bottom: 0;
+  }
+  
+  .noticia-referencias li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .noticia-referencias li:last-child {
+    margin-bottom: 0;
+  }
+  

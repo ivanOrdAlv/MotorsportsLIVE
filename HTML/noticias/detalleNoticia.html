@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotorsportLIVE - Detalle de Noticia</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="stylesheet" href="../../CSS/noticias.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <img src="../../assets/logo.png" alt="MotorsportLIVE Logo" height="40">
+                MotorsportLIVE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./noticias.html">Noticias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../eventos/eventos.html">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pilotos/todosPilotos.html">Pilotos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../equipos/todosEquipos.html">Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../resultados/resultados.html">Resultados</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <div id="userSection" class="d-none">
+                        <button id="adminPanelBtn" class="btn btn-outline-light me-2 d-none">Panel Admin</button>
+                        <button id="logoutBtn" class="btn btn-outline-danger">Cerrar Sesión</button>
+                    </div>
+                    <div id="loginSection">
+                        <button id="loginBtn" class="btn btn-outline-light">Iniciar Sesión</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main>
+        <!-- Header de la noticia -->
+        <div class="noticia-detalle-header" id="noticiaHeader">
+            <!-- Se cargará dinámicamente -->
+            <div class="skeleton-loader" style="height: 400px; width: 100%;"></div>
+        </div>
+
+        <!-- Contenido de la noticia -->
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Contenido principal -->
+                    <div id="noticiaContenido">
+                        <!-- Se cargará dinámicamente -->
+                        <div class="skeleton-loader mb-4">
+                            <div class="skeleton-title mb-4"></div>
+                            <div class="skeleton-text mb-3"></div>
+                            <div class="skeleton-text mb-3"></div>
+                            <div class="skeleton-text mb-3"></div>
+                            <div class="skeleton-text mb-3"></div>
+                            <div class="skeleton-text mb-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Galería de imágenes -->
+                    <div id="noticiaGaleria" class="noticia-galeria">
+                        <!-- Se cargará dinámicamente si hay imágenes adicionales -->
+                    </div>
+
+                    <!-- Referencias -->
+                    <div id="noticiaReferencias" class="noticia-referencias d-none">
+                        <h5>Referencias</h5>
+                        <ul id="listaReferencias">
+                            <!-- Se cargará dinámicamente -->
+                        </ul>
+                    </div>
+
+                    <!-- Compartir -->
+                    <div class="mt-5 mb-4">
+                        <h5>Compartir</h5>
+                        <div class="d-flex gap-3 mt-3">
+                            <a href="#" class="btn btn-outline-primary" id="shareTwitter">
+                                <i class="fab fa-twitter me-2"></i>Twitter
+                            </a>
+                            <a href="#" class="btn btn-outline-primary" id="shareFacebook">
+                                <i class="fab fa-facebook me-2"></i>Facebook
+                            </a>
+                            <a href="#" class="btn btn-outline-primary" id="shareWhatsapp">
+                                <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                            </a>
+                            <button class="btn btn-outline-secondary" id="copyLink">
+                                <i class="fas fa-link me-2"></i>Copiar enlace
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Información del autor -->
+                    <div class="card mb-4" id="autorCard">
+                        <!-- Se cargará dinámicamente -->
+                        <div class="card-body skeleton-loader">
+                            <div class="skeleton-title mb-3"></div>
+                            <div class="skeleton-text mb-2"></div>
+                            <div class="skeleton-text mb-2"></div>
+                        </div>
+                    </div>
+
+                    <!-- Noticias relacionadas -->
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Noticias relacionadas</h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush" id="noticiasRelacionadas">
+                                <!-- Se cargará dinámicamente -->
+                                <li class="list-group-item skeleton-loader">
+                                    <div class="skeleton-text mb-2"></div>
+                                    <div class="skeleton-date"></div>
+                                </li>
+                                <li class="list-group-item skeleton-loader">
+                                    <div class="skeleton-text mb-2"></div>
+                                    <div class="skeleton-date"></div>
+                                </li>
+                                <li class="list-group-item skeleton-loader">
+                                    <div class="skeleton-text mb-2"></div>
+                                    <div class="skeleton-date"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>MotorsportLIVE</h5>
+                    <p class="text-muted">Tu fuente de información sobre el mundo del motor.</p>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Enlaces rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-decoration-none text-muted">Inicio</a></li>
+                        <li><a href="./noticias.html" class="text-decoration-none text-muted">Noticias</a></li>
+                        <li><a href="../eventos/eventos.html" class="text-decoration-none text-muted">Eventos</a></li>
+                        <li><a href="../pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-decoration-none text-muted fs-5"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-decoration-none text-muted fs-5"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-decoration-none text-muted fs-5"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-decoration-none text-muted fs-5"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 MotorsportLIVE. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3">Política de privacidad</a>
+                    <a href="#" class="text-decoration-none text-muted">Términos de uso</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para imágenes -->
+    <div class="modal fade" id="imagenModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3 bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img src="/placeholder.svg" id="modalImagen" class="img-fluid w-100" alt="Imagen ampliada">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../../JS/auth.js"></script>
+    <script src="../../JS/detalleNoticia.js"></script>
+</body>
+</html>

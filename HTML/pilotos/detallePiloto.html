@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Piloto - MotorsportLIVE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --motorsport-red: #e10600;
+            --motorsport-dark: #121212;
+        }
+        
+        .bg-motorsport {
+            background-color: var(--motorsport-red);
+        }
+        
+        .text-motorsport {
+            color: var(--motorsport-red);
+        }
+        
+        .btn-motorsport {
+            background-color: var(--motorsport-red);
+            color: white;
+            border: none;
+        }
+        
+        .btn-motorsport:hover {
+            background-color: #c10500;
+            color: white;
+        }
+        
+        .navbar {
+            background-color: var(--motorsport-dark) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--motorsport-red) !important;
+        }
+        
+        .driver-header {
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0 50px;
+            position: relative;
+        }
+        
+        .driver-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: 1;
+        }
+        
+        .driver-header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .driver-number {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            opacity: 0.5;
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .driver-name {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0;
+        }
+        
+        .driver-team {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .driver-flag {
+            width: 30px;
+            margin-right: 10px;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .stats-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            background-color: white;
+        }
+        
+        .stats-card-header {
+            background-color: var(--motorsport-dark);
+            color: white;
+            padding: 15px 20px;
+        }
+        
+        .stats-card-body {
+            padding: 20px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+        }
+        
+        .race-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .race-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .race-card-header {
+            background-color: var(--motorsport-dark);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .race-card-body {
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .race-result {
+            display: flex;
+            align-items: center;
+        }
+        
+        .position-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .position-1 {
+            background-color: gold;
+            color: black;
+        }
+        
+        .position-2 {
+            background-color: silver;
+            color: black;
+        }
+        
+        .position-3 {
+            background-color: #cd7f32;
+            color: white;
+        }
+        
+        .position-other {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        
+        .race-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .race-detail-item {
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .detail-value {
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--motorsport-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+        }
+        
+        .edit-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .driver-header {
+                padding: 60px 0 30px;
+            }
+            
+            .driver-name {
+                font-size: 2rem;
+            }
+            
+            .driver-number {
+                font-size: 5rem;
+                right: 20px;
+                top: 10px;
+            }
+            
+            .edit-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">MotorsportLIVE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html"><i class="bi bi-house-fill"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-calendar-event"></i> Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/HTML/equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/HTML/pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a></li>
+                </ul>
+                <form class="d-flex me-2">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Buscar..." aria-label="Buscar">
+                        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+                <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main>
+        <!-- Cabecera del piloto -->
+        <header class="driver-header" id="driver-header">
+            <div class="container driver-header-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="driver-name" id="driver-name">Cargando...</h1>
+                        <div class="driver-team" id="driver-team">Cargando equipo...</div>
+                        <div class="d-flex align-items-center">
+                            <img src="/placeholder.svg" alt="Bandera" class="driver-flag" id="driver-flag">
+                            <span id="driver-nationality">Cargando nacionalidad...</span>
+                        </div>
+                        
+                        <!-- Botones de edición -->
+                        <div class="edit-buttons">
+                            <a href="#" class="btn btn-light" id="edit-driver-btn">
+                                <i class="bi bi-pencil-square"></i> Editar Datos Personales
+                            </a>
+                            <a href="#" class="btn btn-light" id="edit-stats-btn">
+                                <i class="bi bi-bar-chart-fill"></i> Editar Estadísticas
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 position-relative">
+                        <div class="driver-number" id="driver-number">#</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container mt-4">
+            <div class="row">
+                <!-- Estadísticas del piloto -->
+                <div class="col-lg-4 mb-4">
+                    <div class="stats-card">
+                        <div class="stats-card-header">
+                            <h4 class="mb-0"><i class="bi bi-bar-chart-fill"></i> Estadísticas</h4>
+                        </div>
+                        <div class="stats-card-body" id="driver-stats">
+                            <div class="loading-spinner">
+                                <div class="spinner-border text-motorsport" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                                <p class="ms-2 mb-0">Cargando estadísticas...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="stats-card-header">
+                            <h4 class="mb-0"><i class="bi bi-info-circle-fill"></i> Información Personal</h4>
+                        </div>
+                        <div class="stats-card-body" id="driver-info">
+                            <div class="loading-spinner">
+                                <div class="spinner-border text-motorsport" role="status">
+                                    <span class="visually-hidden">Cargando...</span>
+                                </div>
+                                <p class="ms-2 mb-0">Cargando información...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resultados recientes -->
+                <div class="col-lg-8">
+                    <h3 class="mb-4">Resultados Recientes</h3>
+                    <div id="recent-results">
+                        <div class="loading-spinner">
+                            <div class="spinner-border text-motorsport" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <p class="ms-2 mb-0">Cargando resultados...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>MotorsportLIVE</h5>
+                    <p class="text-muted">Tu portal de noticias y resultados de deportes de motor en tiempo real.</p>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h6>Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-decoration-none text-muted">Inicio</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Eventos</a></li>
+                        <li><a href="/HTML/equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a></li>
+                        <li><a href="/HTML/pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h6>Categorías</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-muted">Formula 1</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">MotoGP</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">WRC</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Formula E</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Suscríbete</h6>
+                    <p class="text-muted">Recibe las últimas noticias en tu correo</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Tu email">
+                        <button class="btn btn-motorsport" type="button">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 MotorsportLIVE - Todos los derechos reservados</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-decoration-none text-muted"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/JS/cargarDetallePiloto.js"></script>
+</body>
+</html>

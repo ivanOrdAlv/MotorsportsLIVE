@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos los Eventos - MotorsportLIVE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --motorsport-red: #e10600;
+            --motorsport-dark: #121212;
+        }
+
+        .bg-motorsport {
+            background-color: var(--motorsport-red);
+        }
+
+        .text-motorsport {
+            color: var(--motorsport-red);
+        }
+
+        .btn-motorsport {
+            background-color: var(--motorsport-red);
+            color: white;
+            border: none;
+        }
+
+        .btn-motorsport:hover {
+            background-color: #c10500;
+            color: white;
+        }
+
+        .navbar {
+            background-color: var(--motorsport-dark) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-header {
+            background-color: var(--motorsport-dark);
+            color: white;
+            padding: 15px;
+        }
+
+        .event-body {
+            padding: 20px;
+            background-color: white;
+        }
+
+        .event-footer {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .event-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .event-winner {
+            font-weight: bold;
+            color: var(--motorsport-red);
+        }
+
+        .position-1 {
+            background-color: gold;
+            color: #000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .position-2 {
+            background-color: silver;
+            color: #000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .position-3 {
+            background-color: #cd7f32; /* bronze */
+            color: #000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .page-header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/1600x400/?racing,circuit');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">MotorsportLIVE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html"><i class="bi bi-house-fill"></i> Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/HTML/eventos/todosEventos.html"><i class="bi bi-calendar-event"></i> Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/HTML/equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/HTML/pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-2">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Buscar..." aria-label="Buscar">
+                        <button class="btn btn-outline-light" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">Todos los Eventos</h1>
+            <p class="lead">Historial completo de carreras de Fórmula 1</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="search-input" class="form-control" placeholder="Buscar eventos...">
+                    <button class="btn btn-motorsport" type="button" id="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-dark active" id="sort-date-desc">
+                        <i class="bi bi-sort-down"></i> Más recientes
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" id="sort-date-asc">
+                        <i class="bi bi-sort-up"></i> Más antiguos
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="events-container" class="row">
+            <!-- Los eventos se cargarán aquí dinámicamente -->
+            <div class="text-center my-5">
+                <div class="spinner-border text-motorsport" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando eventos...</p>
+            </div>
+        </div>
+
+        <!-- Botón para cargar más eventos (implementación futura) -->
+        <div class="text-center mt-4 mb-5">
+            <button id="load-more" class="btn btn-motorsport">
+                <i class="bi bi-arrow-down-circle"></i> Cargar más eventos
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>MotorsportLIVE</h5>
+                    <p class="text-muted">
+                        Tu portal de noticias y resultados de deportes de motor en tiempo real.
+                    </p>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h6>Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="../index.html" class="text-decoration-none text-muted">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="/HTML/eventos/todosEventos.html" class="text-decoration-none text-muted">Eventos</a>
+                        </li>
+                        <li>
+                            <a href="/HTML/equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a>
+                        </li>
+                        <li>
+                            <a href="/HTML/pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h6>Categorías</h6>
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#" class="text-decoration-none text-muted">Formula 1</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-decoration-none text-muted">MotoGP</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-decoration-none text-muted">WRC</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-decoration-none text-muted">Formula E</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Suscríbete</h6>
+                    <p class="text-muted">Recibe las últimas noticias en tu correo</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Tu email">
+                        <button class="btn btn-motorsport" type="button">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">
+                        © 2025 MotorsportLIVE - Todos los derechos reservados
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-decoration-none text-muted"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+     document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("events-container")
+  const searchInput = document.getElementById("search-input")
+  const searchButton = document.getElementById("search-button")
+  const sortDateDesc = document.getElementById("sort-date-desc")
+  const sortDateAsc = document.getElementById("sort-date-asc")
+  const loadMoreButton = document.getElementById("load-more")
+
+  try {
+    // Obtener datos de carreras y resultados
+    const [racesResponse, resultsResponse, circuitsResponse, driversResponse] = await Promise.all([
+      fetch("http://localhost:3000/races"),
+      fetch("http://localhost:3000/results"),
+      fetch("http://localhost:3000/circuitos"),
+      fetch("http://localhost:3000/drivers"),
+    ])
+
+    if (!racesResponse.ok || !resultsResponse.ok || !circuitsResponse.ok || !driversResponse.ok) {
+      throw new Error("Error al cargar los datos")
+    }
+
+    const allRaces = await racesResponse.json()
+    const allResults = await resultsResponse.json()
+    const allCircuits = await circuitsResponse.json()
+    const allDrivers = await driversResponse.json()
+
+    // Función para obtener el ganador de una carrera
+    function getRaceWinner(raceId) {
+      const raceResults = allResults.filter((result) => result.raceId === raceId)
+      const winner = raceResults.find((result) => result.position === 1 || result.position === "1")
+
+      if (winner) {
+        const driver = allDrivers.find((d) => d.driverId === winner.driverId)
+        return driver ? `${driver.forename} ${driver.surname}` : "Desconocido"
+      }
+      return "No disponible"
+    }
+
+    // Función para obtener el circuito
+    function getCircuit(circuitId) {
+      return (
+        allCircuits.find((c) => c.circuitId === circuitId) || {
+          name: "Circuito desconocido",
+          location: "",
+          country: "",
+        }
+      )
+    }
+
+    // Función para formatear la fecha
+    function formatDate(dateString) {
+      const options = { year: "numeric", month: "long", day: "numeric" }
+      return new Date(dateString).toLocaleDateString("es-ES", options)
+    }
+
+    // Función para renderizar los eventos
+    function renderEvents(races, sortOrder = "desc") {
+      container.innerHTML = ""
+
+      // Ordenar carreras por fecha
+      const sortedRaces = [...races].sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        return sortOrder === "desc" ? dateB - dateA : dateA - dateB
+      })
+
+      if (sortedRaces.length === 0) {
+        container.innerHTML = `
+          <div class="col-12">
+            <div class="alert alert-info" role="alert">
+              <i class="bi bi-info-circle-fill"></i> No se encontraron eventos que coincidan con tu búsqueda.
+            </div>
+          </div>
+        `
+        return
+      }
+
+      sortedRaces.forEach((race) => {
+        const circuit = getCircuit(race.circuitId)
+        const winner = getRaceWinner(race.raceId)
+
+        const eventHTML = `
+          <div class="col-md-6 col-lg-4">
+            <div class="event-card">
+              <div class="event-header">
+                <h5 class="mb-0">${race.name}</h5>
+                <p class="event-date mb-0">
+                  <i class="bi bi-calendar3"></i> ${formatDate(race.date)}
+                </p>
+              </div>
+              <div class="event-body">
+                <p><i class="bi bi-geo-alt"></i> ${circuit.name}, ${circuit.location}, ${circuit.country}</p>
+                <p class="event-winner">
+                  <i class="bi bi-trophy"></i> Ganador: ${winner}
+                </p>
+              </div>
+              <div class="event-footer text-end">
+                <a href="/HTML/eventos/editarEventos.html?id=${race.raceId}" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-pencil"></i> Editar evento
+                </a>
+                <a href="/HTML/resultados/resultados.html?id=${race.circuitId}&race=${race.raceId}" class="btn btn-sm btn-motorsport">
+                  <i class="bi bi-bar-chart"></i> Ver resultados
+                </a>
+                <a href="/HTML/eventos/detalleEventos.html?id=${race.circuitId}" class="btn btn-sm btn-outline-dark ms-2">
+                  <i class="bi bi-info-circle"></i> Detalles
+                </a>
+              </div>
+            </div>
+          </div>
+        `
+
+        container.insertAdjacentHTML("beforeend", eventHTML)
+      })
+    }
+
+    // Renderizar inicialmente (orden descendente por defecto)
+    renderEvents(allRaces, "desc")
+
+    // Event listeners para ordenación
+    sortDateDesc.addEventListener("click", () => {
+      sortDateDesc.classList.add("active")
+      sortDateAsc.classList.remove("active")
+      renderEvents(allRaces, "desc")
+    })
+
+    sortDateAsc.addEventListener("click", () => {
+      sortDateAsc.classList.add("active")
+      sortDateDesc.classList.remove("active")
+      renderEvents(allRaces, "asc")
+    })
+
+    // Event listener para búsqueda
+    searchButton.addEventListener("click", () => {
+      const searchTerm = searchInput.value.toLowerCase()
+      const filteredRaces = allRaces.filter(
+        (race) =>
+          race.name.toLowerCase().includes(searchTerm) ||
+          getCircuit(race.circuitId).name.toLowerCase().includes(searchTerm) ||
+          getCircuit(race.circuitId).country.toLowerCase().includes(searchTerm),
+      )
+      renderEvents(filteredRaces, sortDateDesc.classList.contains("active") ? "desc" : "asc")
+    })
+
+    // Event listener para tecla Enter en el buscador
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        searchButton.click()
+      }
+    })
+
+    // Implementación futura para cargar más eventos
+    loadMoreButton.addEventListener("click", () => {
+      // Aquí podrías implementar la paginación si tienes muchos eventos
+      loadMoreButton.disabled = true
+      loadMoreButton.innerHTML = '<i class="bi bi-check-circle"></i> Todos los eventos cargados'
+    })
+  } catch (error) {
+    console.error("Error al cargar los eventos:", error)
+    container.innerHTML = `
+      <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-triangle-fill"></i> Error al cargar los eventos: ${error.message}
+          <p class="mt-2 small">Asegúrate de que el servidor API esté funcionando en http://localhost:3000</p>
+        </div>
+      </div>
+    `
+  }
+})
+
+
+    </script>
+</body>
+</html>

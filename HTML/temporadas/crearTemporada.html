@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotorsportLIVE - Crear Temporada</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --motorsport-red: #e10600;
+            --motorsport-dark: #121212;
+        }
+        
+        .bg-motorsport {
+            background-color: var(--motorsport-red);
+        }
+        
+        .text-motorsport {
+            color: var(--motorsport-red);
+        }
+        
+        .btn-motorsport {
+            background-color: var(--motorsport-red);
+            color: white;
+            border: none;
+        }
+        
+        .btn-motorsport:hover {
+            background-color: #c10500;
+            color: white;
+        }
+        
+        .navbar {
+            background-color: var(--motorsport-dark) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            color: var(--motorsport-red) !important;
+        }
+        
+        .page-header {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x400/?formula1,racing,calendar');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        footer {
+            background-color: var(--motorsport-dark);
+            color: white;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        .form-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            background-color: white;
+        }
+        
+        .form-label {
+            font-weight: 500;
+        }
+        
+        .required-field::after {
+            content: "*";
+            color: var(--motorsport-red);
+            margin-left: 4px;
+        }
+        
+        .circuit-item {
+            border-left: 3px solid var(--motorsport-red);
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+        
+        .circuit-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .circuit-item.selected {
+            background-color: #e8f4f8;
+            border-left-color: #0d6efd;
+        }
+        
+        .race-item {
+            border-left: 3px solid #0d6efd;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #dee2e6;
+            z-index: -1;
+        }
+        
+        .step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--motorsport-red);
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background-color: #198754;
+            color: white;
+        }
+        
+        .step-title {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .step.active .step-title {
+            color: var(--motorsport-dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">MotorsportLIVE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/index.html"><i class="bi bi-house-fill"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-calendar-event"></i> Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/HTML/equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/HTML/pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/HTML/admin/crearTemporada.html"><i class="bi bi-gear-fill"></i> Admin</a></li>
+                </ul>
+                <form class="d-flex me-2">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Buscar..." aria-label="Buscar">
+                        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+                <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="page-header">
+        <div class="container text-center">
+            <h1 class="display-4">Crear Nueva Temporada</h1>
+            <p class="lead">Configura una nueva temporada y sus eventos</p>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Indicador de pasos -->
+                <div class="step-indicator">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Información Básica</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Seleccionar Circuitos</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Configurar Carreras</div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Revisar y Guardar</div>
+                    </div>
+                </div>
+                
+                <!-- Spinner de carga inicial -->
+                <div id="loading-container" class="loading-spinner d-none">
+                    <div class="spinner-border text-motorsport" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                    <p class="ms-2 mb-0">Cargando datos...</p>
+                </div>
+                
+                <!-- Formulario -->
+                <div id="form-container" class="form-card">
+                    <!-- Paso 1: Información básica de la temporada -->
+                    <div id="step1-content">
+                        <h3 class="mb-4"><i class="bi bi-calendar3"></i> Información de la Temporada</h3>
+                        
+                        <div class="mb-3">
+                            <label for="year" class="form-label required-field">Año</label>
+                            <input type="number" class="form-control" id="year" name="year" min="1950" max="2100" required>
+                            <div class="form-text">Introduce el año de la temporada (ej. 2025)</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="url" class="form-label">URL de referencia</label>
+                            <input type="url" class="form-control" id="url" name="url" placeholder="https://ejemplo.com/temporada-2025">
+                            <div class="form-text">URL opcional con información sobre la temporada</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="category" class="form-label required-field">Categoría</label>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="" selected disabled>Seleccionar categoría</option>
+                                <option value="f1">Formula 1</option>
+                                <option value="motogp">MotoGP</option>
+                                <option value="wrc">WRC</option>
+                                <option value="fe">Formula E</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Breve descripción de la temporada..."></textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='/index.html'">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </button>
+                            <button type="button" class="btn btn-motorsport" id="step1-next">
+                                Siguiente <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 2: Selección de circuitos -->
+                    <div id="step2-content" class="d-none">
+                        <h3 class="mb-4"><i class="bi bi-geo-alt-fill"></i> Seleccionar Circuitos</h3>
+                        
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" id="circuit-search" placeholder="Buscar circuitos...">
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">Circuitos Disponibles</h5>
+                                    </div>
+                                    <div class="card-body p-0" style="height: 400px; overflow-y: auto;">
+                                        <div id="available-circuits" class="list-group list-group-flush">
+                                            <!-- Se llenará dinámicamente con JavaScript -->
+                                            <div class="p-3 text-center text-muted">
+                                                <i class="bi bi-arrow-clockwise"></i> Cargando circuitos...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Circuitos Seleccionados</h5>
+                                        <span class="badge bg-motorsport" id="selected-count">0</span>
+                                    </div>
+                                    <div class="card-body p-0" style="height: 400px; overflow-y: auto;">
+                                        <div id="selected-circuits" class="list-group list-group-flush">
+                                            <!-- Se llenará dinámicamente con JavaScript -->
+                                            <div class="p-3 text-center text-muted" id="no-selected-message">
+                                                <i class="bi bi-info-circle"></i> No hay circuitos seleccionados
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" id="step2-prev">
+                                <i class="bi bi-arrow-left"></i> Anterior
+                            </button>
+                            <button type="button" class="btn btn-motorsport" id="step2-next">
+                                Siguiente <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 3: Configuración de carreras -->
+                    <div id="step3-content" class="d-none">
+                        <h3 class="mb-4"><i class="bi bi-flag-fill"></i> Configurar Carreras</h3>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle-fill"></i> Configura los detalles de cada carrera para la temporada.
+                        </div>
+                        
+                        <div id="races-container">
+                            <!-- Se llenará dinámicamente con JavaScript -->
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-exclamation-circle"></i> Primero debes seleccionar circuitos en el paso anterior
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" id="step3-prev">
+                                <i class="bi bi-arrow-left"></i> Anterior
+                            </button>
+                            <button type="button" class="btn btn-motorsport" id="step3-next">
+                                Siguiente <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 4: Revisión y guardado -->
+                    <div id="step4-content" class="d-none">
+                        <h3 class="mb-4"><i class="bi bi-check-circle-fill"></i> Revisar y Guardar</h3>
+                        
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle-fill"></i> Revisa la información de la temporada antes de guardar.
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Información de la Temporada</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Año:</strong> <span id="review-year"></span></p>
+                                        <p><strong>Categoría:</strong> <span id="review-category"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>URL:</strong> <span id="review-url"></span></p>
+                                        <p><strong>Descripción:</strong> <span id="review-description"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Calendario de Carreras</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Ronda</th>
+                                                <th>Nombre</th>
+                                                <th>Circuito</th>
+                                                <th>Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="review-races">
+                                            <!-- Se llenará dinámicamente con JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" id="step4-prev">
+                                <i class="bi bi-arrow-left"></i> Anterior
+                            </button>
+                            <button type="button" class="btn btn-motorsport" id="save-season">
+                                <i class="bi bi-save"></i> Guardar Temporada
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Alerta de éxito/error (oculta por defecto) -->
+                    <div class="alert mt-3 d-none" id="formAlert" role="alert"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>MotorsportLIVE</h5>
+                    <p class="text-muted">Tu portal de noticias y resultados de deportes de motor en tiempo real.</p>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h6>Enlaces</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/index.html" class="text-decoration-none text-muted">Inicio</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Eventos</a></li>
+                        <li><a href="/HTML/equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a></li>
+                        <li><a href="/HTML/pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h6>Categorías</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-muted">Formula 1</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">MotoGP</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">WRC</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Formula E</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Suscríbete</h6>
+                    <p class="text-muted">Recibe las últimas noticias en tu correo</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Tu email">
+                        <button class="btn btn-motorsport" type="button">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2025 MotorsportLIVE - Todos los derechos reservados</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-decoration-none text-muted"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/JS/crearTemporada.js"></script>
+</body>
+</html>
+

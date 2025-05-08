@@ -1,0 +1,14 @@
+{
+  "name": "motorsportliveapi",
+  "version": "1.0.0",
+  "description": "En esta API, se pueden ver muchas cosas de la F1, así como poder editarlas, crearlas e incluso borrarlas",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

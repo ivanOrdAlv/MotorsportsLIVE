@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotorsportLIVE - Eliminar Cuenta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../CSS/cuenta.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="../../index.html">
+                <img src="../../assets/logo.png" alt="MotorsportLIVE Logo" height="40">
+                MotorsportLIVE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../noticias/noticias.html">Noticias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../eventos/eventos.html">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pilotos/todosPilotos.html">Pilotos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../equipos/todosEquipos.html">Equipos</a>
+                    </li>
+                </ul>
+                <div class="d-flex" id="userNavActions">
+                    <!-- Se llenará dinámicamente con JS -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Sidebar de navegación de cuenta -->
+            <div class="col-lg-3 mb-4">
+                <div class="account-sidebar">
+                    <div class="user-info text-center mb-4">
+                        <div class="avatar-container mb-3">
+                            <img src="../../assets/default-avatar.png" alt="Avatar del usuario" id="userAvatar" class="rounded-circle">
+                        </div>
+                        <h4 id="userName">Cargando...</h4>
+                        <p class="text-muted" id="userEmail">Cargando...</p>
+                    </div>
+                    <div class="list-group">
+                        <a href="verCuenta.html" class="list-group-item list-group-item-action">
+                            <i class="bi bi-person me-2"></i> Mi Perfil
+                        </a>
+                        <a href="editarCuenta.html" class="list-group-item list-group-item-action">
+                            <i class="bi bi-pencil-square me-2"></i> Editar Perfil
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" id="misFavoritosBtn">
+                            <i class="bi bi-heart me-2"></i> Mis Favoritos
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action" id="misComentariosBtn">
+                            <i class="bi bi-chat-left-text me-2"></i> Mis Comentarios
+                        </a>
+                        <a href="eliminarCuenta.html" class="list-group-item list-group-item-action active text-white">
+                            <i class="bi bi-trash me-2"></i> Eliminar Cuenta
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action text-danger" id="cerrarSesionBtn">
+                            <i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido principal -->
+            <div class="col-lg-9">
+                <div class="card shadow-sm border-danger">
+                    <div class="card-header bg-danger text-white">
+                        <h3 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar Cuenta</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-warning">
+                            <h4 class="alert-heading"><i class="bi bi-exclamation-circle me-2"></i>¡Atención!</h4>
+                            <p>Estás a punto de eliminar tu cuenta de MotorsportLIVE. Esta acción es <strong>permanente e irreversible</strong>.</p>
+                            <hr>
+                            <p class="mb-0">Al eliminar tu cuenta:</p>
+                            <ul>
+                                <li>Se eliminarán todos tus datos personales</li>
+                                <li>Perderás acceso a tu historial de actividad</li>
+                                <li>Se eliminarán tus comentarios y favoritos</li>
+                                <li>No podrás recuperar tu cuenta en el futuro</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>¿Por qué quieres eliminar tu cuenta?</h5>
+                            <p class="text-muted">Esta información nos ayuda a mejorar nuestros servicios.</p>
+                            
+                            <div class="mb-3">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="razon-eliminacion" id="razon1" value="no-uso">
+                                    <label class="form-check-label" for="razon1">Ya no uso el servicio</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="razon-eliminacion" id="razon2" value="problemas">
+                                    <label class="form-check-label" for="razon2">He tenido problemas técnicos</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="razon-eliminacion" id="razon3" value="privacidad">
+                                    <label class="form-check-label" for="razon3">Preocupaciones de privacidad</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="razon-eliminacion" id="razon4" value="otra-cuenta">
+                                    <label class="form-check-label" for="razon4">Tengo otra cuenta</label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="razon-eliminacion" id="razon5" value="otro">
+                                    <label class="form-check-label" for="razon5">Otro motivo</label>
+                                </div>
+                                <div class="mt-3 d-none" id="otro-motivo-container">
+                                    <label for="otro-motivo" class="form-label">Especifica el motivo:</label>
+                                    <textarea class="form-control" id="otro-motivo" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-4">
+                            <h5>Confirma tu decisión</h5>
+                            <p>Para confirmar la eliminación de tu cuenta, por favor ingresa tu contraseña actual:</p>
+                            
+                            <div class="mb-3">
+                                <label for="password-confirm" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password-confirm" required>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="confirm-delete" required>
+                                <label class="form-check-label" for="confirm-delete">
+                                    Entiendo que esta acción es permanente y no se puede deshacer
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="verCuenta.html" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Cancelar
+                            </a>
+                            <button type="button" class="btn btn-danger" id="deleteAccountBtn" disabled>
+                                <i class="bi bi-trash me-2"></i>Eliminar Cuenta Permanentemente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación final -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación Final</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">¿Estás completamente seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="finalDeleteBtn">
+                        <i class="bi bi-trash me-2"></i>Sí, Eliminar mi Cuenta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>MotorsportLIVE</h5>
+                    <p>Tu fuente de información sobre el mundo del automovilismo.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../../index.html" class="text-white">Inicio</a></li>
+                        <li><a href="../noticias/noticias.html" class="text-white">Noticias</a></li>
+                        <li><a href="../eventos/eventos.html" class="text-white">Eventos</a></li>
+                        <li><a href="../pilotos/todosPilotos.html" class="text-white">Pilotos</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 MotorsportLIVE. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../../JS/eliminarCuenta.js"></script>
+</body>
+</html>

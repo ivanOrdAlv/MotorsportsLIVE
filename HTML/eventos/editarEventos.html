@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Evento - MotorsportLIVE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+      :root {
+          --motorsport-red: #e10600;
+          --motorsport-dark: #121212;
+      }
+      
+      .bg-motorsport {
+          background-color: var(--motorsport-red);
+      }
+      
+      .text-motorsport {
+          color: var(--motorsport-red);
+      }
+      
+      .btn-motorsport {
+          background-color: var(--motorsport-red);
+          color: white;
+          border: none;
+      }
+      
+      .btn-motorsport:hover {
+          background-color: #c10500;
+          color: white;
+      }
+      
+      .navbar {
+          background-color: var(--motorsport-dark) !important;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .navbar-brand {
+          font-weight: bold;
+          font-size: 1.5rem;
+      }
+      
+      .nav-link {
+          font-weight: 500;
+      }
+      
+      .nav-link:hover {
+          color: var(--motorsport-red) !important;
+      }
+      
+      .page-header {
+          background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x400/?formula1,racing,circuit');
+          background-size: cover;
+          background-position: center;
+          color: white;
+          padding: 60px 0;
+          margin-bottom: 40px;
+      }
+      
+      footer {
+          background-color: var(--motorsport-dark);
+          color: white;
+          padding: 20px 0;
+          margin-top: 50px;
+      }
+      
+      .form-card {
+          border-radius: 10px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          padding: 30px;
+          background-color: white;
+      }
+      
+      .form-label {
+          font-weight: 500;
+      }
+      
+      .required-field::after {
+          content: "*";
+          color: var(--motorsport-red);
+          margin-left: 4px;
+      }
+      
+      .loading-spinner {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 200px;
+      }
+      
+      .result-row {
+          transition: all 0.2s;
+          border-left: 3px solid transparent;
+      }
+      
+      .result-row:hover {
+          background-color: #f8f9fa;
+          border-left-color: var(--motorsport-red);
+      }
+      
+      .position-badge {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: white;
+          background-color: #6c757d;
+      }
+      
+      .position-1 {
+          background-color: gold;
+          color: black;
+      }
+      
+      .position-2 {
+          background-color: silver;
+          color: black;
+      }
+      
+      .position-3 {
+          background-color: #cd7f32; /* bronce */
+          color: black;
+      }
+      
+      .driver-avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: white;
+          background-color: #6c757d;
+      }
+      
+      .circuit-info {
+          background-color: #f8f9fa;
+          border-radius: 8px;
+          padding: 20px;
+          margin-bottom: 20px;
+      }
+      
+      .circuit-name {
+          font-weight: bold;
+          font-size: 1.2rem;
+          margin-bottom: 5px;
+      }
+      
+      .circuit-location {
+          color: #6c757d;
+      }
+      
+      .race-info {
+          margin-bottom: 20px;
+      }
+      
+      .race-date {
+          font-weight: bold;
+      }
+      
+      .tab-content {
+          padding-top: 20px;
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+          <a class="navbar-brand" href="/index.html">MotorsportLIVE</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav me-auto">
+                  <li class="nav-item"><a class="nav-link" href="/index.html"><i class="bi bi-house-fill"></i> Inicio</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="/HTML/eventos/todosEventos.html"><i class="bi bi-calendar-event"></i> Eventos</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/HTML/equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/HTML/pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a></li>
+              </ul>
+              <form class="d-flex me-2">
+                  <div class="input-group">
+                      <input class="form-control" type="search" placeholder="Buscar..." aria-label="Buscar">
+                      <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                  </div>
+              </form>
+              <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
+                  <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+              </button>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="page-header">
+      <div class="container text-center">
+          <h1 class="display-4">Editar Evento</h1>
+          <p class="lead">Modifica los detalles y resultados de la carrera</p>
+      </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="container">
+      <div class="row justify-content-center">
+          <div class="col-lg-10">
+              <!-- Spinner de carga inicial -->
+              <div id="loading-container" class="loading-spinner">
+                  <div class="spinner-border text-motorsport" role="status">
+                      <span class="visually-hidden">Cargando...</span>
+                  </div>
+                  <p class="ms-2 mb-0">Cargando datos del evento...</p>
+              </div>
+              
+              <!-- Formulario -->
+              <div id="form-container" class="form-card d-none">
+                  <div id="event-details">
+                      <!-- Se llenará dinámicamente con JavaScript -->
+                  </div>
+                  
+                  <ul class="nav nav-tabs" id="eventTabs" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="race-tab" data-bs-toggle="tab" data-bs-target="#race-tab-pane" type="button" role="tab" aria-controls="race-tab-pane" aria-selected="true">
+                              <i class="bi bi-flag-fill"></i> Información de Carrera
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="results-tab" data-bs-toggle="tab" data-bs-target="#results-tab-pane" type="button" role="tab" aria-controls="results-tab-pane" aria-selected="false">
+                              <i class="bi bi-trophy"></i> Resultados
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="qualifying-tab" data-bs-toggle="tab" data-bs-target="#qualifying-tab-pane" type="button" role="tab" aria-controls="qualifying-tab-pane" aria-selected="false">
+                              <i class="bi bi-stopwatch"></i> Clasificación
+                          </button>
+                      </li>
+                  </ul>
+                  
+                  <div class="tab-content" id="eventTabsContent">
+                      <!-- Pestaña de Información de Carrera -->
+                      <div class="tab-pane fade show active" id="race-tab-pane" role="tabpanel" aria-labelledby="race-tab" tabindex="0">
+                          <form id="race-form">
+                              <div class="row">
+                                  <div class="col-md-6 mb-3">
+                                      <label for="race-name" class="form-label required-field">Nombre del evento</label>
+                                      <input type="text" class="form-control" id="race-name" name="name" required>
+                                  </div>
+                                  <div class="col-md-6 mb-3">
+                                      <label for="race-round" class="form-label required-field">Ronda</label>
+                                      <input type="number" class="form-control" id="race-round" name="round" min="1" required>
+                                  </div>
+                              </div>
+                              
+                              <div class="row">
+                                  <div class="col-md-6 mb-3">
+                                      <label for="race-date" class="form-label required-field">Fecha</label>
+                                      <input type="date" class="form-control" id="race-date" name="date" required>
+                                  </div>
+                                  <div class="col-md-6 mb-3">
+                                      <label for="race-time" class="form-label required-field">Hora</label>
+                                      <input type="time" class="form-control" id="race-time" name="time" required>
+                                  </div>
+                              </div>
+                              
+                              <div class="row">
+                                  <div class="col-md-6 mb-3">
+                                      <label for="race-year" class="form-label required-field">Año</label>
+                                      <input type="number" class="form-control" id="race-year" name="year" min="1950" max="2100" required>
+                                  </div>
+                                  <div class="col-md-6 mb-3">
+                                      <label for="race-url" class="form-label">URL de referencia</label>
+                                      <input type="url" class="form-control" id="race-url" name="url">
+                                  </div>
+                              </div>
+                              
+                              <div class="d-flex justify-content-end mt-3">
+                                  <button type="submit" class="btn btn-motorsport">
+                                      <i class="bi bi-save"></i> Guardar Cambios
+                                  </button>
+                              </div>
+                          </form>
+                      </div>
+                      
+                      <!-- Pestaña de Resultados -->
+                      <div class="tab-pane fade" id="results-tab-pane" role="tabpanel" aria-labelledby="results-tab" tabindex="0">
+                          <div class="mb-3">
+                              <div class="alert alert-info">
+                                  <i class="bi bi-info-circle-fill"></i> Edita los resultados de la carrera. Los cambios afectarán a las estadísticas de los pilotos.
+                              </div>
+                          </div>
+                          
+                          <div class="table-responsive">
+                              <table class="table table-hover" id="results-table">
+                                  <thead class="table-light">
+                                      <tr>
+                                          <th>Pos</th>
+                                          <th>Piloto</th>
+                                          <th>Equipo</th>
+                                          <th>Puntos</th>
+                                          <th>Parrilla</th>
+                                          <th>Vueltas</th>
+                                          <th>Tiempo</th>
+                                          <th>Acciones</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="results-body">
+                                      <!-- Se llenará dinámicamente con JavaScript -->
+                                  </tbody>
+                              </table>
+                          </div>
+                          
+                          <div class="d-flex justify-content-between mt-3">
+                              <button type="button" class="btn btn-outline-success" id="add-result-btn">
+                                  <i class="bi bi-plus-circle"></i> Añadir Resultado
+                              </button>
+                              <button type="button" class="btn btn-motorsport" id="save-results-btn">
+                                  <i class="bi bi-save"></i> Guardar Todos los Resultados
+                              </button>
+                          </div>
+                      </div>
+                      
+                      <!-- Pestaña de Clasificación -->
+                      <div class="tab-pane fade" id="qualifying-tab-pane" role="tabpanel" aria-labelledby="qualifying-tab" tabindex="0">
+                          <div class="alert alert-info">
+                              <i class="bi bi-info-circle-fill"></i> Edita los resultados de la clasificación.
+                          </div>
+                          
+                          <div class="table-responsive">
+                              <table class="table table-hover" id="qualifying-table">
+                                  <thead class="table-light">
+                                      <tr>
+                                          <th>Pos</th>
+                                          <th>Piloto</th>
+                                          <th>Equipo</th>
+                                          <th>Q1</th>
+                                          <th>Q2</th>
+                                          <th>Q3</th>
+                                          <th>Acciones</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="qualifying-body">
+                                      <!-- Se llenará dinámicamente con JavaScript -->
+                                  </tbody>
+                              </table>
+                          </div>
+                          
+                          <div class="d-flex justify-content-between mt-3">
+                              <button type="button" class="btn btn-outline-success" id="add-qualifying-btn">
+                                  <i class="bi bi-plus-circle"></i> Añadir Clasificación
+                              </button>
+                              <button type="button" class="btn btn-motorsport" id="save-qualifying-btn">
+                                  <i class="bi bi-save"></i> Guardar Clasificación
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <!-- Botones de acción -->
+                  <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                      <a href="/HTML/eventos/todosEventos.html" class="btn btn-outline-secondary">
+                          <i class="bi bi-arrow-left"></i> Volver a Eventos
+                      </a>
+                      <a href="/HTML/resultados/resultados.html" id="view-results-link" class="btn btn-outline-dark">
+                          <i class="bi bi-eye"></i> Ver Resultados
+                      </a>
+                  </div>
+                  
+                  <!-- Alerta de éxito/error (oculta por defecto) -->
+                  <div class="alert mt-3 d-none" id="formAlert" role="alert"></div>
+              </div>
+          </div>
+      </div>
+  </main>
+
+  <!-- Modal para editar resultado -->
+  <div class="modal fade" id="editResultModal" tabindex="-1" aria-labelledby="editResultModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header bg-motorsport text-white">
+                  <h5 class="modal-title" id="editResultModalLabel">Editar Resultado</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="edit-result-form">
+                      <input type="hidden" id="edit-result-id">
+                      
+                      <div class="row">
+                          <div class="col-md-6 mb-3">
+                              <label for="edit-driver" class="form-label required-field">Piloto</label>
+                              <select class="form-select" id="edit-driver" required>
+                                  <!-- Se llenará dinámicamente con JavaScript -->
+                              </select>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                              <label for="edit-constructor" class="form-label required-field">Equipo</label>
+                              <select class="form-select" id="edit-constructor" required>
+                                  <!-- Se llenará dinámicamente con JavaScript -->
+                              </select>
+                          </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="col-md-4 mb-3">
+                              <label for="edit-position" class="form-label required-field">Posición</label>
+                              <input type="number" class="form-control" id="edit-position" min="1" required>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                              <label for="edit-grid" class="form-label required-field">Posición en parrilla</label>
+                              <input type="number" class="form-control" id="edit-grid" min="1" required>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                              <label for="edit-points" class="form-label required-field">Puntos</label>
+                              <input type="number" class="form-control" id="edit-points" min="0" step="1" required>
+                          </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="col-md-4 mb-3">
+                              <label for="edit-laps" class="form-label required-field">Vueltas completadas</label>
+                              <input type="number" class="form-control" id="edit-laps" min="0" required>
+                          </div>
+                          <div class="col-md-4 mb-3">
+                              <label for="edit-time" class="form-label">Tiempo</label>
+                              <input type="text" class="form-control" id="edit-time" placeholder="1:34:50.616 o +5.478">
+                          </div>
+                          <div class="col-md-4 mb-3">
+                              <label for="edit-status" class="form-label required-field">Estado</label>
+                              <select class="form-select" id="edit-status" required>
+                                  <!-- Se llenará dinámicamente con JavaScript -->
+                              </select>
+                          </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="col-md-6 mb-3">
+                              <label for="edit-fastest-lap" class="form-label">Vuelta más rápida</label>
+                              <input type="text" class="form-control" id="edit-fastest-lap" placeholder="1:27.452">
+                          </div>
+                          <div class="col-md-6 mb-3">
+                              <label for="edit-fastest-lap-speed" class="form-label">Velocidad vuelta rápida (km/h)</label>
+                              <input type="number" class="form-control" id="edit-fastest-lap-speed" step="0.001" min="0">
+                          </div>
+                      </div>
+                      
+                      <div class="form-check mb-3">
+                          <input class="form-check-input" type="checkbox" id="edit-fastest-lap-rank">
+                          <label class="form-check-label" for="edit-fastest-lap-rank">
+                              Vuelta más rápida de la carrera
+                          </label>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-motorsport" id="save-result-btn">Guardar Cambios</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Modal para editar clasificación -->
+  <div class="modal fade" id="editQualifyingModal" tabindex="-1" aria-labelledby="editQualifyingModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header bg-motorsport text-white">
+                  <h5 class="modal-title" id="editQualifyingModalLabel">Editar Clasificación</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="edit-qualifying-form">
+                      <input type="hidden" id="edit-qualifying-id">
+                      
+                      <div class="row">
+                          <div class="col-md-6 mb-3">
+                              <label for="edit-qualifying-driver" class="form-label required-field">Piloto</label>
+                              <select class="form-select" id="edit-qualifying-driver" required>
+                                  <!-- Se llenará dinámicamente con JavaScript -->
+                              </select>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                              <label for="edit-qualifying-constructor" class="form-label required-field">Equipo</label>
+                              <select class="form-select" id="edit-qualifying-constructor" required>
+                                  <!-- Se llenará dinámicamente con JavaScript -->
+                              </select>
+                          </div>
+                      </div>
+                      
+                      <div class="row">
+                          <div class="col-md-3 mb-3">
+                              <label for="edit-qualifying-position" class="form-label required-field">Posición</label>
+                              <input type="number" class="form-control" id="edit-qualifying-position" min="1" required>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                              <label for="edit-qualifying-q1" class="form-label">Tiempo Q1</label>
+                              <input type="text" class="form-control" id="edit-qualifying-q1" placeholder="1:23.456">
+                          </div>
+                          <div class="col-md-3 mb-3">
+                              <label for="edit-qualifying-q2" class="form-label">Tiempo Q2</label>
+                              <input type="text" class="form-control" id="edit-qualifying-q2" placeholder="1:22.345">
+                          </div>
+                          <div class="col-md-3 mb-3">
+                              <label for="edit-qualifying-q3" class="form-label">Tiempo Q3</label>
+                              <input type="text" class="form-control" id="edit-qualifying-q3" placeholder="1:21.234">
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-motorsport" id="save-qualifying-item-btn">Guardar Cambios</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-4">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4 mb-3 mb-md-0">
+                  <h5>MotorsportLIVE</h5>
+                  <p class="text-muted">Tu portal de noticias y resultados de deportes de motor en tiempo real.</p>
+              </div>
+              <div class="col-md-2 mb-3 mb-md-0">
+                  <h6>Enlaces</h6>
+                  <ul class="list-unstyled">
+                      <li><a href="/index.html" class="text-decoration-none text-muted">Inicio</a></li>
+                      <li><a href="/HTML/eventos/todosEventos.html" class="text-decoration-none text-muted">Eventos</a></li>
+                      <li><a href="/HTML/equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a></li>
+                      <li><a href="/HTML/pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
+                  </ul>
+              </div>
+              <div class="col-md-2 mb-3 mb-md-0">
+                  <h6>Categorías</h6>
+                  <ul class="list-unstyled">
+                      <li><a href="#" class="text-decoration-none text-muted">Formula 1</a></li>
+                      <li><a href="#" class="text-decoration-none text-muted">MotoGP</a></li>
+                      <li><a href="#" class="text-decoration-none text-muted">WRC</a></li>
+                      <li><a href="#" class="text-decoration-none text-muted">Formula E</a></li>
+                  </ul>
+              </div>
+              <div class="col-md-4">
+                  <h6>Suscríbete</h6>
+                  <p class="text-muted">Recibe las últimas noticias en tu correo</p>
+                  <div class="input-group">
+                      <input type="email" class="form-control" placeholder="Tu email">
+                      <button class="btn btn-motorsport" type="button">Enviar</button>
+                  </div>
+              </div>
+          </div>
+          <hr class="my-4">
+          <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start">
+                  <p class="mb-0">© 2025 MotorsportLIVE - Todos los derechos reservados</p>
+              </div>
+              <div class="col-md-6 text-center text-md-end">
+                  <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-facebook"></i></a>
+                  <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-twitter-x"></i></a>
+                  <a href="#" class="text-decoration-none text-muted me-3"><i class="bi bi-instagram"></i></a>
+                  <a href="#" class="text-decoration-none text-muted"><i class="bi bi-youtube"></i></a>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="/JS/editarEventos.js"></script>
+</body>
+</html>
+

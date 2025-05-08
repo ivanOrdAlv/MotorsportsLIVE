@@ -1,0 +1,164 @@
+/* Estilos para la página de creación de noticias */
+
+/* Estilos para el editor de texto */
+.quill-editor {
+    height: 300px;
+    margin-bottom: 10px;
+    border-radius: 0.25rem;
+  }
+  
+  .ql-toolbar.ql-snow,
+  .ql-container.ql-snow {
+    border-color: #ced4da;
+  }
+  
+  .ql-toolbar.ql-snow {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+  
+  .ql-container.ql-snow {
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+  
+  /* Estilos para la carga de imágenes */
+  .image-upload-container {
+    width: 100%;
+  }
+  
+  .image-preview {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #ced4da;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .image-preview:hover {
+    border-color: #6c757d;
+  }
+  
+  .image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .upload-placeholder {
+    text-align: center;
+    color: #6c757d;
+  }
+  
+  .upload-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para los enlaces de referencia */
+  .enlace-item {
+    transition: all 0.3s ease;
+  }
+  
+  .enlace-item:hover {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 5px;
+  }
+  
+  /* Estilos para la vista previa */
+  #preview-container {
+    max-width: 100%;
+  }
+  
+  #preview-titulo {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  #preview-subtitulo {
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  
+  .preview-imagen-principal {
+    width: 100%;
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    margin-bottom: 20px;
+  }
+  
+  .preview-imagen-principal img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  #preview-imagenes-adicionales .col-md-6 {
+    margin-bottom: 15px;
+  }
+  
+  #preview-imagenes-adicionales img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+  }
+  
+  /* Estilos para los mensajes de error */
+  .error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  /* Estilos para el estado de carga */
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Estilos para los mensajes de alerta */
+  .alert-float {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
