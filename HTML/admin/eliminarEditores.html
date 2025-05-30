@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="../index.html">
-                <img src="../../assets/logo.png" alt="MotorsportLIVE Logo" height="40">
+                <img src="../../assets/logoML.jpeg" alt="MotorsportLIVE Logo" height="40">
                 MotorsportLIVE
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,11 @@
                             <i class="bi bi-shield-lock-fill"></i> Admin
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
-                            <li><a class="dropdown-item" href="admin.html">Panel de Control</a></li>
+                            <li><a class="dropdown-item" href="./admin.html">Panel de Control</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="crearTemporada.html">Crear Temporada</a></li>
-                            <li><a class="dropdown-item" href="crearEvento.html">Crear Evento</a></li>
-                            <li><a class="dropdown-item" href="crearNoticia.html">Crear Noticia</a></li>
+                            <li><a class="dropdown-item" href="../eventos/crearEvento.html">Crear Evento</a></li>
+                            <li><a class="dropdown-item" href="../noticias/crearNoticia.html">Crear Noticia</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="../usuario/verCuenta.html">Mi Cuenta</a></li>
                             <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar Sesión</a></li>
@@ -100,9 +100,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="mb-0"><i class="bi bi-person-x me-2"></i>Eliminar Editores</h2>
                     <div>
-                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#crearEditorModal">
-                            <i class="bi bi-person-plus me-2"></i>Crear Editor
-                        </button>
+                       
                         <a href="admin.html" class="btn btn-outline-secondary">
                             <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
                         </a>
@@ -121,22 +119,7 @@
                                     <input type="text" class="form-control border-start-0" id="searchEditor" placeholder="Buscar editor...">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <select class="form-select" id="filterRol">
-                                    <option value="">Todos los roles</option>
-                                    <option value="editor">Editor</option>
-                                    <option value="editor_senior">Editor Senior</option>
-                                    <option value="editor_jefe">Editor Jefe</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <select class="form-select" id="filterEstado">
-                                    <option value="">Todos los estados</option>
-                                    <option value="activo">Activo</option>
-                                    <option value="inactivo">Inactivo</option>
-                                    <option value="pendiente">Pendiente</option>
-                                </select>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -153,11 +136,10 @@
                                         <th scope="col">Rol</th>
                                         <th scope="col">Fecha Registro</th>
                                         <th scope="col">Noticias</th>
-                                        <th scope="col">Estado</th>
                                         <th scope="col" class="text-end pe-4">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody id="editoresTable">
+                                <tbody id="editoresTableBody">
                                     <!-- Los editores se cargarán dinámicamente aquí -->
                                     <tr class="placeholder-glow">
                                         <td class="ps-4"><span class="placeholder col-8"></span></td>
@@ -240,8 +222,6 @@
                             <select class="form-select" id="editorRol" required>
                                 <option value="" selected disabled>Selecciona un rol</option>
                                 <option value="editor">Editor</option>
-                                <option value="editor_senior">Editor Senior</option>
-                                <option value="editor_jefe">Editor Jefe</option>
                             </select>
                         </div>
                         <div class="form-check mb-3">
@@ -317,7 +297,7 @@
             <hr class="my-4">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0 text-muted">&copy; 2023 MotorsportLIVE. Todos los derechos reservados.</p>
+                    <p class="mb-0 text-muted">&copy; 2025 MotorsportLIVE. Todos los derechos reservados.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <a href="#" class="text-decoration-none text-muted me-3">Política de Privacidad</a>
@@ -328,6 +308,171 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../../JS/eliminarEditores.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+
+
+  const supabaseUrl = "https://tdyjnlkntgamugcvxczj.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkeWpubGtudGdhbXVnY3Z4Y3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTI4OTUsImV4cCI6MjA2MTc4ODg5NX0.R_NQAYiK1eaAB2Ulrhn2xEOwPwsAmxGexGQOmPCSPBY";
+
+      // Crear cliente de Supabase
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// Verificar que Supabase esté cargado
+      if (typeof supabase === 'undefined') {
+        console.error('Supabase no está cargado correctamente');
+      } else {
+        console.log('Supabase cargado correctamente');
+      }
+        async function cerrarSesion() {
+        try {
+          if (!supabaseClient) {
+            console.error('Supabase client no está inicializado');
+            return;
+          }
+          
+          const { error } = await supabaseClient.auth.signOut();
+          if (error) throw error;
+          
+          localStorage.clear();
+          window.location.href = "../index.html";
+        } catch (error) {
+          console.error("Error cerrando sesión:", error);
+          // Mostrar mensaje al usuario
+          alert("Error al cerrar sesión. Por favor, inténtalo de nuevo.");
+        }
+      }
+
+        // Verificar autenticación y tipo de usuario
+      async function verificarAcceso() {
+        try {
+          if (!supabaseClient) {
+            console.error('Supabase client no está inicializado');
+            window.location.href = "../index.html";
+            return false;
+          }
+
+          const { data: { user }, error } = await supabaseClient.auth.getUser();
+
+          if (error || !user) {
+            console.log("Usuario no autenticado, redirigiendo...");
+            window.location.href = "../index.html";
+            return false;
+          }
+
+          // Verificar si es administrador
+          const { data: userData, error: userError } = await supabaseClient
+            .from("Usuarios")
+            .select("tipoUsuario")
+            .eq("id", user.id)
+            .single();
+
+          if (userError || !userData || userData.tipoUsuario !== "Administrador") {
+            console.log("Usuario no es administrador, redirigiendo...");
+            window.location.href = "../index.html";
+            return false;
+          }
+
+          return true;
+        } catch (error) {
+          console.error("Error verificando acceso:", error);
+          window.location.href = "../index.html";
+          return false;
+        }
+      }
+
+         document.addEventListener("DOMContentLoaded", async function () {
+        console.log("🚀 Página cargada, iniciando verificaciones...");
+
+        // Verificar acceso
+        const tieneAcceso = await verificarAcceso();
+        if (tieneAcceso) {
+          console.log("✅ Acceso verificado");
+
+          // Configurar evento de cerrar sesión
+          const logoutBtn = document.getElementById("logoutBtn");
+          if (logoutBtn) {
+            logoutBtn.addEventListener("click", cerrarSesion);
+          } else {
+            console.error("No se encontró el botón de cerrar sesión");
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // Verificar que supabaseClient esté disponible
+    if (!window.supabaseClient) {
+      throw new Error('Supabase client no está disponible');
+    }
+
+    // Función para cargar editores
+    async function cargarEditores() {
+      const { data: editores, error } = await window.supabaseClient
+        .from('Usuarios')
+        .select('*')
+        .eq('tipoUsuario', 'Editor');
+      
+      if (error) throw error;
+      
+      // Llenar la tabla con los editores
+      const tbody = document.getElementById('editoresTableBody');
+      if (!tbody) throw new Error('No se encontró el elemento tbody');
+      
+      // Limpiar placeholders
+      tbody.innerHTML = '';
+      
+      // Agregar filas para cada editor
+      editores.forEach(editor => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="ps-4">${editor.nombre} ${editor.apellidos}</td>
+          <td>${editor.email}</td>
+          <td>${editor.tipoUsuario}</td>
+          <td>${new Date(editor.created_at).toLocaleDateString()}</td>
+          <td>${editor.noticiasPublicadas || 0}</td>
+          <td class="text-end pe-4">
+            <button class="btn btn-danger btn-sm eliminar-editor" data-id="${editor.id}">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      // Agregar eventos a los botones de eliminar
+       // Agregar eventos a los botones de eliminar
+      document.querySelectorAll('.eliminar-editor').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const editorId = btn.getAttribute('data-id');
+          
+          // Buscar el editor seleccionado en los datos ya cargados
+          const editorSeleccionado = editores.find(editor => editor.id === editorId);
+          
+          if (editorSeleccionado) {
+            // Guardar los datos del editor en sessionStorage para usarlos en la página de confirmación
+            sessionStorage.setItem('editorAEliminar', JSON.stringify(editorSeleccionado));
+            
+            // Redirigir a la página de confirmación
+            window.location.href = 'confirmarEditor.html';
+          } else {
+            console.error('Editor no encontrado');
+          }
+        });
+      });
+    }
+    
+    // Cargar editores inicialmente
+    await cargarEditores();
+    
+  } catch (error) {
+    console.error('Error:', error);
+    // Mostrar mensaje de error al usuario
+  }
+});
+    </script>
+        <script type="module" src="../../JS/eliminarEditores.js"></script>
 </body>
 </html>
