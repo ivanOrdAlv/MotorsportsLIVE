@@ -236,9 +236,8 @@
                 ><i class="bi bi-person-circle"></i> Pilotos</a
               >
             </li>
-         
           </ul>
-          
+
           <!-- Contenedor para el botón de login o información del usuario -->
           <div id="auth-container">
             <button
@@ -298,8 +297,6 @@
           <button type="button" class="btn btn-outline-dark active">
             Todos
           </button>
-        
-          
         </div>
       </div>
 
@@ -313,7 +310,9 @@
           <!-- Botón para cargar más eventos -->
           <div class="text-center mt-4">
             <i class="bi bi-calendar-event"></i>
-            <a href="/HTML/eventos/todosEventos.html" class="btn btn-sm btn-dark"
+            <a
+              href="/HTML/eventos/todosEventos.html"
+              class="btn btn-sm btn-dark"
               >Cargar más eventos</a
             >
           </div>
@@ -567,7 +566,6 @@
                   >Formula 1</a
                 >
               </li>
-              
             </ul>
           </div>
           <div class="col-md-4">
@@ -610,6 +608,13 @@
       crossorigin="anonymous"
     ></script>
     <script type="module" src="/JS/cargarCircuitos.js"></script>
+
+    <script type="module">
+      import { supabase } from "./JS/services/supabase.js";
+
+      // Usa supabase normalmente
+      console.log("Supabase está listo", supabase);
+    </script>
 
     <!-- Configuración de Supabase -->
     <script>
@@ -670,12 +675,12 @@
     </script>
     <!-- 5) Cargamos el userSession.js (sin type="module") -->
 
-   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof checkUserSession === 'function') {
-      checkUserSession();
-    }
-  });
-</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof checkUserSession === "function") {
+          checkUserSession();
+        }
+      });
+    </script>
   </body>
 </html>
