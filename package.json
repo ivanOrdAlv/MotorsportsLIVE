@@ -11,13 +11,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open",
-  "build": "webpack"
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "copy-webpack-plugin": "^13.0.0",
     "html-webpack-plugin": "^5.6.3",
     "webpack": "^5.99.8",
     "webpack-cli": "^6.0.1",
