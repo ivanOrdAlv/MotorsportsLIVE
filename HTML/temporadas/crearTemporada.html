@@ -182,17 +182,16 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="/index.html">MotorsportLIVE</a>
+            <a class="navbar-brand" href="../index.html">MotorsportLIVE</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="/index.html"><i class="bi bi-house-fill"></i> Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-calendar-event"></i> Eventos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/HTML/equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/HTML/pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/HTML/admin/crearTemporada.html"><i class="bi bi-gear-fill"></i> Admin</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html"><i class="bi bi-house-fill"></i> Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../eventos/todosEventos.html"><i class="bi bi-calendar-event"></i> Eventos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a></li>
                 </ul>
                 <form class="d-flex me-2">
                     <div class="input-group">
@@ -200,9 +199,16 @@
                         <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
                     </div>
                 </form>
-                <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-                </button>
+                <!-- Contenedor para el botón de login o información del usuario -->
+          <div id="auth-container">
+            <button
+              class="btn btn-motorsport"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </button>
+          </div>
             </div>
         </div>
     </nav>
@@ -270,9 +276,7 @@
                             <select class="form-select" id="category" name="category" required>
                                 <option value="" selected disabled>Seleccionar categoría</option>
                                 <option value="f1">Formula 1</option>
-                                <option value="motogp">MotoGP</option>
-                                <option value="wrc">WRC</option>
-                                <option value="fe">Formula E</option>
+                    
                             </select>
                         </div>
                         
@@ -448,19 +452,16 @@
                 <div class="col-md-2 mb-3 mb-md-0">
                     <h6>Enlaces</h6>
                     <ul class="list-unstyled">
-                        <li><a href="/index.html" class="text-decoration-none text-muted">Inicio</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Eventos</a></li>
-                        <li><a href="/HTML/equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a></li>
-                        <li><a href="/HTML/pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
+                        <li><a href="../index.html" class="text-decoration-none text-muted">Inicio</a></li>
+                        <li><a href="../eventos/todosEventos.html" class="text-decoration-none text-muted">Eventos</a></li>
+                        <li><a href="../equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a></li>
+                        <li><a href="../pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2 mb-3 mb-md-0">
                     <h6>Categorías</h6>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-decoration-none text-muted">Formula 1</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">MotoGP</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">WRC</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Formula E</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -488,7 +489,121 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const userData = JSON.parse(localStorage.getItem('userData'))
+
+    if (!userData || (userData.tipoUsuario !== 'Editor' && userData.tipoUsuario !== 'Administrador')) {
+      alert('No tienes permisos para editar eventos.')
+      window.location.href = '/HTML/index.html'
+    }
+  });
+</script>
+
     <script src="/JS/crearTemporada.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+         <script>
+      // Script para manejar la transición entre modales
+      const loginModal = document.getElementById("loginModal");
+      const registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+  
+    <script>
+      // Script para manejar la transición entre modales
+       loginModal = document.getElementById("loginModal");
+       registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+   <!-- Scripts de utilidades y debugging -->
+    <script src="../../JS/utils/supabaseDebug.js"></script>
+
+    <!-- Inicializar Supabase (usa tu URL y clave reales) -->
+<script type="text/javascript">
+  // Configurar Supabase usando el CDN
+      const supabaseUrl = "https://tdyjnlkntgamugcvxczj.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkeWpubGtudGdhbXVnY3Z4Y3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTI4OTUsImV4cCI6MjA2MTc4ODg5NX0.R_NQAYiK1eaAB2Ulrhn2xEOwPwsAmxGexGQOmPCSPBY";
+
+  window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+
+       <script src="../../JS/auth/userSession.js"></script>
+    <script src="../../JS/auth/login.js"></script>
+    <script src="../../JS/auth/register.js"></script>
+        <script type="module">
+  import { checkUserSession } from '../../JS/auth/userSession.js';
+  document.addEventListener('DOMContentLoaded', checkUserSession);
+</script>
+  <script  src="../JS/auth/userSession.js"></script>
+    <script src="/JS/auth/login.js"></script>
+    <script src="/JS/auth/register.js"></script>
+        <script type="module">
+  import { checkUserSession } from '../../JS/auth/userSession.js';
+  document.addEventListener('DOMContentLoaded', checkUserSession);
+</script>
 </body>
 </html>
 

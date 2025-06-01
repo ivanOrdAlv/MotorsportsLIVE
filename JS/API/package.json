@@ -1,14 +1,3 @@
-{
-  "name": "motorsportliveapi",
-  "version": "1.0.0",
-  "description": "En esta API, se pueden ver muchas cosas de la F1, así como poder editarlas, crearlas e incluso borrarlas",
-  "main": "api.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.21.2"
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:17c2f6cdd32e915d85d387af96c8e8b07801ac2e8ede9df565863159e6586e77
+size 658

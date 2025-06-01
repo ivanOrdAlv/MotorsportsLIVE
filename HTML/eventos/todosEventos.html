@@ -142,13 +142,13 @@
                         <a class="nav-link" href="../index.html"><i class="bi bi-house-fill"></i> Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/HTML/eventos/todosEventos.html"><i class="bi bi-calendar-event"></i> Eventos</a>
+                        <a class="nav-link active" href="./todosEventos.html"><i class="bi bi-calendar-event"></i> Eventos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/HTML/equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a>
+                        <a class="nav-link" href="../equipos/todosEquipos.html"><i class="bi bi-people-fill"></i> Equipos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/HTML/pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a>
+                        <a class="nav-link" href="../pilotos/todosPilotos.html"><i class="bi bi-person-circle"></i> Pilotos</a>
                     </li>
                 </ul>
                 <form class="d-flex me-2">
@@ -159,9 +159,16 @@
                         </button>
                     </div>
                 </form>
-                <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-                </button>
+                <!-- Contenedor para el botón de login o información del usuario -->
+          <div id="auth-container">
+            <button
+              class="btn btn-motorsport"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </button>
+          </div>
             </div>
         </div>
     </nav>
@@ -215,6 +222,205 @@
         </div>
     </div>
 
+
+    <!-- Modal de Inicio de Sesión -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" id="auth-container">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label"
+                  >Correo electrónico</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="loginEmail"
+                  placeholder="ejemplo@correo.com"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  placeholder="Contraseña"
+                  required
+                />
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="rememberMe"
+                />
+                <label class="form-check-label" for="rememberMe"
+                  >Recordarme</label
+                >
+              </div>
+              <button type="submit" class="btn btn-motorsport w-100">
+                Iniciar Sesión
+              </button>
+            </form>
+            <div class="text-center mt-3">
+              <p class="mb-0">
+                ¿Olvidaste tu contraseña?
+                <a href="#" class="text-motorsport">Recuperar</a>
+              </p>
+              <p class="mt-2">
+                ¿No tienes cuenta?
+                <a
+                  href="#"
+                  class="text-motorsport"
+                  data-bs-toggle="modal"
+                  data-bs-target="#registerModal"
+                  data-bs-dismiss="modal"
+                  >Regístrate</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div
+      class="modal fade"
+      id="registerModal"
+      tabindex="-1"
+      aria-labelledby="registerModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" id="auth-container">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registerModalLabel">Crear Cuenta</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="registerForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="registerFirstName" class="form-label"
+                    >Nombre</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registerFirstName"
+                    placeholder="Tu nombre"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="registerLastName" class="form-label"
+                    >Apellidos</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registerLastName"
+                    placeholder="Tus apellidos"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label"
+                  >Correo electrónico</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="registerEmail"
+                  placeholder="ejemplo@correo.com"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label"
+                  >Contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registerPassword"
+                  placeholder="Mínimo 8 caracteres"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="registerConfirmPassword" class="form-label"
+                  >Confirmar contraseña</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registerConfirmPassword"
+                  placeholder="Repite tu contraseña"
+                  required
+                />
+              </div>
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="termsCheck"
+                  required
+                />
+                <label class="form-check-label" for="termsCheck"
+                  >Acepto los
+                  <a href="#" class="text-motorsport"
+                    >términos y condiciones</a
+                  ></label
+                >
+              </div>
+              <button type="submit" class="btn btn-motorsport w-100">
+                Crear Cuenta
+              </button>
+            </form>
+            <div class="text-center mt-3">
+              <p>
+                ¿Ya tienes cuenta?
+                <a
+                  href="#"
+                  class="text-motorsport"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                  data-bs-dismiss="modal"
+                  >Iniciar Sesión</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-4 bg-dark text-white">
         <div class="container">
@@ -232,13 +438,13 @@
                             <a href="../index.html" class="text-decoration-none text-muted">Inicio</a>
                         </li>
                         <li>
-                            <a href="/HTML/eventos/todosEventos.html" class="text-decoration-none text-muted">Eventos</a>
+                            <a href="./todosEventos.html" class="text-decoration-none text-muted">Eventos</a>
                         </li>
                         <li>
-                            <a href="/HTML/equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a>
+                            <a href="../equipos/todosEquipos.html" class="text-decoration-none text-muted">Equipos</a>
                         </li>
                         <li>
-                            <a href="/HTML/pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a>
+                            <a href="../pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a>
                         </li>
                     </ul>
                 </div>
@@ -248,15 +454,7 @@
                         <li>
                             <a href="#" class="text-decoration-none text-muted">Formula 1</a>
                         </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-muted">MotoGP</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-muted">WRC</a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-decoration-none text-muted">Formula E</a>
-                        </li>
+                       
                     </ul>
                 </div>
                 <div class="col-md-4">
@@ -284,8 +482,50 @@
             </div>
         </div>
     </footer>
-    <script src="../../JS/auth/userSession.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- Cargar Supabase desde CDN -->
+      <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <script>
+      // Script para manejar la transición entre modales
+      const loginModal = document.getElementById("loginModal");
+      const registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+    
     <script>
      document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("events-container")
@@ -298,10 +538,10 @@
   try {
     // Obtener datos de carreras y resultados
     const [racesResponse, resultsResponse, circuitsResponse, driversResponse] = await Promise.all([
-      fetch("http://localhost:3000/races"),
-      fetch("http://localhost:3000/results"),
-      fetch("http://localhost:3000/circuitos"),
-      fetch("http://localhost:3000/drivers"),
+      fetch("https://motor-sports-live-api.vercel.app/races"),
+      fetch("https://motor-sports-live-api.vercel.app/results"),
+      fetch("https://motor-sports-live-api.vercel.app/circuitos"),
+      fetch("https://motor-sports-live-api.vercel.app/drivers"),
     ])
 
     if (!racesResponse.ok || !resultsResponse.ok || !circuitsResponse.ok || !driversResponse.ok) {
@@ -449,7 +689,7 @@
       <div class="col-12">
         <div class="alert alert-danger" role="alert">
           <i class="bi bi-exclamation-triangle-fill"></i> Error al cargar los eventos: ${error.message}
-          <p class="mt-2 small">Asegúrate de que el servidor API esté funcionando en http://localhost:3000</p>
+          <p class="mt-2 small">Asegúrate de que el servidor API esté funcionando en https://motor-sports-live-api.vercel.app/</p>
         </div>
       </div>
     `
@@ -458,5 +698,63 @@
 
 
     </script>
+
+    
+    <script>
+      // Script para manejar la transición entre modales
+       loginModal = document.getElementById("loginModal");
+       registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+   <!-- Scripts de utilidades y debugging -->
+    <script src="../../JS/utils/supabaseDebug.js"></script>
+
+    <!-- Inicializar Supabase (usa tu URL y clave reales) -->
+<script type="text/javascript">
+  // Configurar Supabase usando el CDN
+      const supabaseUrl = "https://tdyjnlkntgamugcvxczj.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkeWpubGtudGdhbXVnY3Z4Y3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTI4OTUsImV4cCI6MjA2MTc4ODg5NX0.R_NQAYiK1eaAB2Ulrhn2xEOwPwsAmxGexGQOmPCSPBY";
+
+  window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+
+       <script src="../../JS/auth/userSession.js"></script>
+    <script src="../../JS/auth/login.js"></script>
+    <script src="../../JS/auth/register.js"></script>
+        <script type="module">
+  import { checkUserSession } from '../../JS/auth/userSession.js';
+  document.addEventListener('DOMContentLoaded', checkUserSession);
+</script>
 </body>
 </html>

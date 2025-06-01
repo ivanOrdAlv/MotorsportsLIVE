@@ -1,11 +1,3 @@
-const express = require('express'); 
-const path = require('path');
-const app = express(); 
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../HTML/index.html')); // Ajusta la ruta a la carpeta HTML
-});
-
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
+version https://git-lfs.github.com/spec/v1
+oid sha256:b33d0e64a6da60af315442bc0fae656d2ab57b5da62e22a24888ebd9ef90abe0
+size 313

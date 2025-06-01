@@ -12,14 +12,116 @@
     <div id="circuitos-container" class="row justify-content-center"></div>
     <div class="col-lg-10">
       
-        <script src="../JS/cargarCircuitos.js"></script>
+        <script src="../../JS/cargarCircuitos.js"></script>
         
         <!-- Botón para cargar más eventos -->
         <div class="text-center mt-4">
-            <i class="bi bi-calendar-event"></i>  <a href="/HTML/eventos/todosEventos.html" class="btn btn-sm btn-dark">Cargar más eventos</a>
+            <i class="bi bi-calendar-event"></i>  <a href="../eventos/todosEventos.html" class="btn btn-sm btn-dark">Cargar más eventos</a>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
+         <script>
+      // Script para manejar la transición entre modales
+      const loginModal = document.getElementById("loginModal");
+      const registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+  
+    <script>
+      // Script para manejar la transición entre modales
+       loginModal = document.getElementById("loginModal");
+       registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+   <!-- Scripts de utilidades y debugging -->
+    <script src="../../JS/utils/supabaseDebug.js"></script>
+
+    <!-- Inicializar Supabase (usa tu URL y clave reales) -->
+<script type="text/javascript">
+  // Configurar Supabase usando el CDN
+      const supabaseUrl = "https://tdyjnlkntgamugcvxczj.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkeWpubGtudGdhbXVnY3Z4Y3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTI4OTUsImV4cCI6MjA2MTc4ODg5NX0.R_NQAYiK1eaAB2Ulrhn2xEOwPwsAmxGexGQOmPCSPBY";
+
+  window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+
+       <script src="../../JS/auth/userSession.js"></script>
+    <script src="../../JS/auth/login.js"></script>
+    <script src="../../JS/auth/register.js"></script>
+        <script type="module">
+  import { checkUserSession } from '../../JS/auth/userSession.js';
+  document.addEventListener('DOMContentLoaded', checkUserSession);
+</script>
+  <script  src="../JS/auth/userSession.js"></script>
+    <script src="/JS/auth/login.js"></script>
+    <script src="/JS/auth/register.js"></script>
+        <script type="module">
+  import { checkUserSession } from '../../JS/auth/userSession.js';
+  document.addEventListener('DOMContentLoaded', checkUserSession);
+</script>
 </body>
 </html>

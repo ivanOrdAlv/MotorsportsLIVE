@@ -1,8 +1,3 @@
-
-
-import { createClient } from '@supabase/supabase-js'
-const supabaseUrl = 'https://tdyjnlkntgamugcvxczj.supabase.co'
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkeWpubGtudGdhbXVnY3Z4Y3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTI4OTUsImV4cCI6MjA2MTc4ODg5NX0.R_NQAYiK1eaAB2Ulrhn2xEOwPwsAmxGexGQOmPCSPBY"
-const supabase = createClient(supabaseUrl, supabaseKey)
-
-export default supabase
+version https://git-lfs.github.com/spec/v1
+oid sha256:7700d74234e442ef4e66a09306d64731c2fe50cffd58041c19b73cb23de9023b
+size 828

@@ -195,17 +195,17 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/HTML/eventos/todosEventos.html"
+              <a class="nav-link active" href="./todosEventos.html"
                 ><i class="bi bi-calendar-event"></i> Eventos</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/HTML/equipos/todosEquipos.html"
+              <a class="nav-link" href="../equipos/todosEquipos.html"
                 ><i class="bi bi-people-fill"></i> Equipos</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/HTML/pilotos/todosPilotos.html"
+              <a class="nav-link" href="../pilotos/todosPilotos.html"
                 ><i class="bi bi-person-circle"></i> Pilotos</a
               >
             </li>
@@ -218,18 +218,18 @@
                 placeholder="Buscar..."
                 aria-label="Buscar"
               />
-              <button class="btn btn-outline-light" type="submit">
-                <i class="bi bi-search"></i>
-              </button>
+             <div id="auth-container">
+            <button
+              class="btn btn-motorsport"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+            >
+              <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+            </button>
+          </div>
             </div>
           </form>
-          <button
-            class="btn btn-motorsport"
-            data-bs-toggle="modal"
-            data-bs-target="#loginModal"
-          >
-            <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
-          </button>
+    
         </div>
       </div>
     </nav>
@@ -266,21 +266,21 @@
               </li>
               <li>
                 <a
-                  href="/HTML/eventos/todosEventos.html"
+                  href="./todosEventos.html"
                   class="text-decoration-none text-muted"
                   >Eventos</a
                 >
               </li>
               <li>
                 <a
-                  href="/HTML/equipos/todosEquipos.html"
+                  href="../equipos/todosEquipos.html"
                   class="text-decoration-none text-muted"
                   >Equipos</a
                 >
               </li>
               <li>
                 <a
-                  href="/HTML/pilotos/todosPilotos.html"
+                  href="../pilotos/todosPilotos.html"
                   class="text-decoration-none text-muted"
                   >Pilotos</a
                 >
@@ -295,17 +295,7 @@
                   >Formula 1</a
                 >
               </li>
-              <li>
-                <a href="#" class="text-decoration-none text-muted">MotoGP</a>
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-muted">WRC</a>
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-muted"
-                  >Formula E</a
-                >
-              </li>
+              
             </ul>
           </div>
           <div class="col-md-4">
@@ -375,13 +365,13 @@
 
           try {
   // Primero intentamos obtener los detalles completos
-  const detailsResponse = await fetch(`http://localhost:3000/circuitos/${circuitId}/details`);
+  const detailsResponse = await fetch(`https://motor-sports-live-api.vercel.app/circuitos/${circuitId}/details`);
   if (detailsResponse.ok) {
     circuito = await detailsResponse.json();
     console.log("Detalles completos del circuito cargados:", circuito);
   } else {
     // Si falla, obtenemos la información básica y la complementamos
-    const basicResponse = await fetch(`http://localhost:3000/circuitos/${circuitId}`);
+    const basicResponse = await fetch(`https://motor-sports-live-api.vercel.app/circuitos/${circuitId}`);
     if (!basicResponse.ok) {
       throw new Error(`Error HTTP: ${basicResponse.status}`);
     }
@@ -402,7 +392,7 @@
               error
             );
             const response = await fetch(
-              `http://localhost:3000/circuitos/${circuitId}`
+              `https://motor-sports-live-api.vercel.app/circuitos/${circuitId}`
             );
             if (!response.ok) {
               throw new Error(`Error HTTP: ${response.status}`);
@@ -681,7 +671,7 @@
                     <div class="container my-5">
                         <div class="alert alert-danger" role="alert">
                             <i class="bi bi-exclamation-triangle-fill"></i> Error al cargar los detalles del circuito: ${error.message}
-                            <p class="mt-2 small">Asegúrate de que el servidor API esté funcionando en http://localhost:3000</p>
+                            <p class="mt-2 small">Asegúrate de que el servidor API esté funcionando en https://motor-sports-live-api.vercel.app/</p>
                         </div>
                         <a href="/index.html" class="btn btn-motorsport">
                             <i class="bi bi-arrow-left"></i> Volver a la página principal
@@ -691,5 +681,102 @@
         }
       });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+         <script>
+      // Script para manejar la transición entre modales
+      const loginModal = document.getElementById("loginModal");
+      const registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+  
+    <script>
+      // Script para manejar la transición entre modales
+       loginModal = document.getElementById("loginModal");
+       registerModal = document.getElementById("registerModal");
+
+      loginModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de registro estaba abierto, lo cerramos
+        const registerModalInstance =
+          bootstrap.Modal.getInstance(registerModal);
+        if (registerModalInstance) {
+          registerModalInstance.hide();
+        }
+      });
+
+      registerModal.addEventListener("show.bs.modal", function (event) {
+        // Si el modal de login estaba abierto, lo cerramos
+        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
+        if (loginModalInstance) {
+          loginModalInstance.hide();
+        }
+      });
+
+      // Verificar sesión de usuario al cargar la página
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ejecutar debugging de Supabase (opcional, para desarrollo)
+        if (typeof debugSupabase === "function") {
+          debugSupabase();
+        }
+
+        if (window.checkUserSession) {
+          window.checkUserSession();
+        } else {
+          console.error("checkUserSession no está disponible");
+        }
+      });
+    </script>
+   <!-- Scripts de utilidades y debugging -->
+    <script src="../../JS/utils/supabaseDebug.js"></script>
+
+    <!-- Inicializar Supabase (usa tu URL y clave reales) -->
+<script type="text/javascript">
+  // Configurar Supabase usando el CDN
+      const supabaseUrl = "https://tdyjnlkntgamugcvxczj.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkeWpubGtudGdhbXVnY3Z4Y3pqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTI4OTUsImV4cCI6MjA2MTc4ODg5NX0.R_NQAYiK1eaAB2Ulrhn2xEOwPwsAmxGexGQOmPCSPBY";
+
+  window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+
+       <script src="../../JS/auth/userSession.js"></script>
+    <script src="../../JS/auth/login.js"></script>
+    <script src="../../JS/auth/register.js"></script>
+        <script type="module">
+  import { checkUserSession } from '../../JS/auth/userSession.js';
+  document.addEventListener('DOMContentLoaded', checkUserSession);
+</script>
+
   </body>
 </html>
