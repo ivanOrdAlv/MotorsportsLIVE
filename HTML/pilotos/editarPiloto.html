@@ -742,7 +742,7 @@ async function handleLogin(event) {
       // Si no hay datos en la tabla Usuarios, consideramos que es primer acceso
       localStorage.setItem("primerAcceso", "true")
       setTimeout(() => {
-        window.location.href = "/HTML/index.html"
+        window.location.href = "../../index.html"
       }, 1000)
     } else {
       // Redirigir según el tipo de usuario
