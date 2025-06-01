@@ -213,7 +213,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
       <div class="container">
-        <a class="navbar-brand" href="../index.html">MotorsportLIVE</a>
+        <a class="navbar-brand" href="../../index.html">MotorsportLIVE</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -225,7 +225,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../index.html"
+              <a class="nav-link" href="../../index.html"
                 ><i class="bi bi-house-fill"></i> Inicio</a
               >
             </li>
@@ -298,7 +298,7 @@
             <h6>Enlaces</h6>
             <ul class="list-unstyled">
               <li>
-                <a href="../index.html" class="text-decoration-none text-muted"
+                <a href="../../index.html" class="text-decoration-none text-muted"
                   >Inicio</a
                 >
               </li>
@@ -669,43 +669,511 @@
         }
       });
     </script>
-  
+     <!-- 5) Cargamos el userSession.js (sin type="module") -->
     <script>
-      // Script para manejar la transición entre modales
-       loginModal = document.getElementById("loginModal");
-       registerModal = document.getElementById("registerModal");
+        // /JS/auth/userSession.js
 
-      loginModal.addEventListener("show.bs.modal", function (event) {
-        // Si el modal de registro estaba abierto, lo cerramos
-        const registerModalInstance =
-          bootstrap.Modal.getInstance(registerModal);
-        if (registerModalInstance) {
-          registerModalInstance.hide();
-        }
-      });
+async function checkUserSession() {
+  try {
+    console.log("Verificando sesión de usuario...");
 
-      registerModal.addEventListener("show.bs.modal", function (event) {
-        // Si el modal de login estaba abierto, lo cerramos
-        const loginModalInstance = bootstrap.Modal.getInstance(loginModal);
-        if (loginModalInstance) {
-          loginModalInstance.hide();
-        }
-      });
+    // 1. Verificar si hay datos de usuario en localStorage
+    const storedUserData = localStorage.getItem("userData");
+    const storedToken = localStorage.getItem("token");
 
-      // Verificar sesión de usuario al cargar la página
-      document.addEventListener("DOMContentLoaded", function () {
-        // Ejecutar debugging de Supabase (opcional, para desarrollo)
-        if (typeof debugSupabase === "function") {
-          debugSupabase();
-        }
+    if (storedUserData && storedToken) {
+      // Intentar obtener el usuario a partir del token
+      const { data: { user }, error: userError } = await window.supabaseClient.auth.getUser(storedToken);
+      if (!userError && user) {
+        // Token válido: mostramos menú de usuario con los datos de localStorage
+        const userData = JSON.parse(storedUserData);
+        showUserInfo(userData);
+        return;
+      } else {
+        // Token inválido: limpiar localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("userData");
+      }
+    }
 
-        if (window.checkUserSession) {
-          window.checkUserSession();
-        } else {
-          console.error("checkUserSession no está disponible");
+    // 2. Si no había datos o el token era inválido, preguntamos a Supabase por la sesión actual
+    const { data: { session }, error: sessionError } = await window.supabaseClient.auth.getSession();
+    if (sessionError || !session) {
+      console.log("No hay sesión activa");
+      showLoginButton();
+      return;
+    }
+
+    // 3. Sí hay sesión activa: recuperamos datos de la tabla "Usuarios"
+    const { data: userDataFromDB, error: userErrorFromDB } = await window.supabaseClient
+      .from("Usuarios")
+      .select("nombre, apellidos, email, tipoUsuario")
+      .eq("id", session.user.id)
+      .single();
+
+    if (userErrorFromDB || !userDataFromDB) {
+      console.error("Error al obtener datos del usuario desde BD:", userErrorFromDB);
+      showLoginButton();
+      return;
+    }
+
+    // 4. Guardamos en localStorage y mostramos el menú de usuario
+    localStorage.setItem("token", session.access_token);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        id: session.user.id,
+        email: userDataFromDB.email,
+        nombre: userDataFromDB.nombre,
+        apellidos: userDataFromDB.apellidos,
+        tipoUsuario: userDataFromDB.tipoUsuario,
+      })
+    );
+    showUserInfo(userDataFromDB);
+  } catch (error) {
+    console.error("Error al verificar sesión:", error);
+    showLoginButton();
+  }
+}
+
+// Función para mostrar el botón de inicio de sesión
+function showLoginButton() {
+  const authContainer = document.getElementById("auth-container");
+  if (authContainer) {
+    authContainer.innerHTML = `
+      <button class="btn btn-motorsport" data-bs-toggle="modal" data-bs-target="#loginModal">
+        <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+      </button>
+    `;
+  }
+}
+
+// Función para mostrar la información del usuario en el navbar
+function showUserInfo(userData) {
+  const authContainer = document.getElementById("auth-container");
+  if (!authContainer) return;
+
+  authContainer.innerHTML = `
+    <div class="user-menu">
+      <button class="user-menu-toggle" onclick="toggleUserMenu()">
+        <i class="bi bi-person-circle"></i>
+        <span>${userData.nombre}</span>
+        <i class="bi bi-chevron-down"></i>
+      </button>
+      <div class="user-menu-dropdown" id="userMenuDropdown">
+        <a href="/HTML/cuenta/verCuenta.html" class="user-menu-item">
+          <i class="bi bi-person"></i> Mi Perfil
+        </a>
+        ${
+          userData.tipoUsuario === "Editor"
+            ? '<a href="/HTML/editor/editor.html" class="user-menu-item"><i class="bi bi-pencil-square"></i> Panel de Editor</a>'
+            : ""
         }
-      });
+        ${
+          userData.tipoUsuario === "Administrador"
+            ? '<a href="/HTML/admin/admin.html" class="user-menu-item"><i class="bi bi-gear"></i> Panel de Administración</a>'
+            : ""
+        }
+        <div class="user-menu-divider"></div>
+        <a href="#" class="user-menu-item logout" onclick="logout()">
+          <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+// Función para alternar el dropdown de usuario
+function toggleUserMenu() {
+  const dropdown = document.getElementById("userMenuDropdown");
+  if (dropdown) dropdown.classList.toggle("show");
+}
+
+// Función para cerrar sesión
+async function logout() {
+  try {
+    console.log("Cerrando sesión...");
+
+    const { error } = await window.supabaseClient.auth.signOut();
+    if (error) console.error("Error al cerrar sesión:", error);
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+    localStorage.removeItem("primerAcceso");
+    localStorage.removeItem("refreshToken");
+
+    window.location.reload();
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+    alert("Error al cerrar sesión. Por favor, inténtalo de nuevo.");
+  }
+}
+
+// Cerramos el menú si el usuario hace clic fuera
+document.addEventListener("click", (event) => {
+  const userMenu = document.querySelector(".user-menu");
+  const dropdown = document.getElementById("userMenuDropdown");
+  if (userMenu && dropdown && !userMenu.contains(event.target)) {
+    dropdown.classList.remove("show");
+  }
+});
+
+export { checkUserSession, toggleUserMenu, logout };
+
+// Exponemos las funciones globales
+window.checkUserSession = checkUserSession;
+window.toggleUserMenu = toggleUserMenu;
+window.logout = logout;
+
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm")
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", handleLogin)
+  }
+})
+
+async function handleLogin(event) {
+  event.preventDefault()
+
+  // Obtener los datos del formulario
+  const email = document.getElementById("loginEmail").value
+  const password = document.getElementById("loginPassword").value
+  const rememberMe = document.getElementById("rememberMe").checked
+
+  // Validar datos
+  if (!email || !password) {
+    mostrarNotificacion("Por favor, ingresa tu correo electrónico y contraseña.", "error")
+    return
+  }
+
+  // Mostrar indicador de carga
+  const submitBtn = event.target.querySelector('button[type="submit"]')
+  const originalBtnText = submitBtn.innerHTML
+  submitBtn.innerHTML =
+    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Iniciando sesión...'
+  submitBtn.disabled = true
+
+  try {
+    console.log("Iniciando sesión...")
+
+    // Iniciar sesión en Supabase Auth
+    const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    console.log("Respuesta de signIn:", { data, error })
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    if (!data.user || !data.session) {
+      throw new Error("No se pudo iniciar sesión")
+    }
+
+    // Guardar token
+    localStorage.setItem("token", data.session.access_token)
+
+    // Si es "recordarme", guardar el refresh token
+    if (rememberMe) {
+      localStorage.setItem("refreshToken", data.session.refresh_token)
+    }
+
+    // Verificar si es primer acceso consultando la tabla Usuarios
+    const { data: userData, error: userError } = await window.supabaseClient
+      .from("Usuarios")
+      .select("nombre, apellidos, email, tipoUsuario")
+      .eq("id", data.user.id)
+      .single()
+
+    console.log("Datos del usuario:", { userData, userError })
+
+    // Guardar datos del usuario
+    if (userData) {
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          id: data.user.id,
+          email: userData.email,
+          nombre: userData.nombre,
+          apellidos: userData.apellidos,
+          tipoUsuario: userData.tipoUsuario,
+        }),
+      )
+    }
+
+    // Restaurar botón
+    submitBtn.innerHTML = originalBtnText
+    submitBtn.disabled = false
+
+    // Cerrar modal
+    const loginModal = bootstrap.Modal.getInstance(document.getElementById("loginModal"))
+    if (loginModal) {
+      loginModal.hide()
+    }
+
+    // Actualizar la interfaz
+    if (typeof checkUserSession === "function") {
+      checkUserSession()
+    }
+
+    // Mostrar mensaje de éxito
+    mostrarNotificacion(`¡Bienvenido${userData?.nombre ? " " + userData.nombre : ""}!`, "success")
+
+    // Determinar redirección según el tipo de usuario y si es primer acceso
+    if (userError || !userData) {
+      // Si no hay datos en la tabla Usuarios, consideramos que es primer acceso
+      localStorage.setItem("primerAcceso", "true")
+      setTimeout(() => {
+        window.location.href = "/HTML/index.html"
+      }, 1000)
+    } else {
+      // Redirigir según el tipo de usuario
+      setTimeout(() => {
+        switch (userData.tipoUsuario) {
+          case "Administrador":
+            window.location.href = "/HTML/admin/admin.html"
+            break
+          case "Editor":
+            window.location.href = "/HTML/editor/editor.html"
+            break
+          default:
+            // Recargar la página actual para usuarios invitados
+            window.location.reload()
+        }
+      }, 1000)
+    }
+  } catch (error) {
+    console.error("Error:", error)
+    mostrarNotificacion(`Error al iniciar sesión: ${error.message}`, "error")
+
+    // Restaurar botón
+    submitBtn.innerHTML = originalBtnText
+    submitBtn.disabled = false
+  }
+}
+
+// Función para mostrar notificaciones
+function mostrarNotificacion(mensaje, tipo) {
+  // Si existe un sistema de notificaciones, usarlo
+  if (window.toast) {
+    window.toast(mensaje, { type: tipo })
+    return
+  }
+
+  // Si no, usar alert para errores y console.log para éxitos
+  if (tipo === "error") {
+    alert(mensaje)
+  } else {
+    console.log(mensaje)
+  }
+}
+
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const registerForm = document.getElementById("registerForm")
+
+  if (registerForm) {
+    registerForm.addEventListener("submit", handleRegister)
+  }
+})
+
+async function handleRegister(event) {
+  event.preventDefault()
+
+  // Obtener los datos del formulario
+  const nombre = document.getElementById("registerFirstName").value
+  const apellidos = document.getElementById("registerLastName").value
+  const email = document.getElementById("registerEmail").value
+  const password = document.getElementById("registerPassword").value
+  const confirmPassword = document.getElementById("registerConfirmPassword").value
+  const termsAccepted = document.getElementById("termsCheck").checked
+
+  // Validar datos
+  if (!nombre || !apellidos || !email || !password) {
+    mostrarNotificacion("Por favor, completa todos los campos obligatorios.", "error")
+    return
+  }
+
+  if (password !== confirmPassword) {
+    mostrarNotificacion("Las contraseñas no coinciden.", "error")
+    return
+  }
+
+  if (!termsAccepted) {
+    mostrarNotificacion("Debes aceptar los términos y condiciones para continuar.", "error")
+    return
+  }
+
+  // Mostrar indicador de carga
+  const submitBtn = event.target.querySelector('button[type="submit"]')
+  const originalBtnText = submitBtn.innerHTML
+  submitBtn.innerHTML =
+    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Registrando...'
+  submitBtn.disabled = true
+
+  try {
+    console.log("Iniciando registro de usuario...")
+
+    // Paso 1: Registrar usuario en Supabase Auth
+    const { data: authData, error: authError } = await window.supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          nombre,
+          apellidos,
+          tipoUsuario: "Invitado",
+        },
+      },
+    })
+
+    console.log("Respuesta de signUp:", { authData, authError })
+
+    if (authError) {
+      throw new Error(authError.message)
+    }
+
+    if (!authData.user) {
+      throw new Error("No se pudo crear el usuario en Authentication")
+    }
+
+    console.log("Usuario registrado en Auth:", authData.user.id)
+
+    // Paso 2: Esperar un momento para asegurar que el usuario esté completamente creado
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // Paso 3: Crear entrada en la tabla Usuarios
+    console.log("Insertando datos en tabla Usuarios...")
+
+    const { data: userData, error: userError } = await window.supabaseClient
+      .from("Usuarios")
+      .insert([
+        {
+          id: authData.user.id,
+          email: email,
+          nombre: nombre,
+          apellidos: apellidos,
+          tipoUsuario: "Invitado",
+          Contrasenia: password, // Guardar la contraseña encriptada
+        },
+      ])
+      .select()
+
+    console.log("Respuesta de inserción en Usuarios:", { userData, userError })
+
+    if (userError) {
+      console.error("Error detallado al crear entrada en Usuarios:", userError)
+
+      // Si hay error, intentar verificar si el usuario ya existe
+      const { data: existingUser, error: checkError } = await window.supabaseClient
+        .from("Usuarios")
+        .select("*")
+        .eq("id", authData.user.id)
+        .single()
+
+      console.log("Verificación de usuario existente:", { existingUser, checkError })
+
+      if (!existingUser) {
+        // Si no existe y hay error, mostrar el error específico
+        throw new Error(`Error al guardar datos del usuario: ${userError.message}`)
+      }
+    }
+
+    // Paso 4: Verificar que los datos se guardaron correctamente
+    const { data: verificationData, error: verificationError } = await window.supabaseClient
+      .from("Usuarios")
+      .select("*")
+      .eq("id", authData.user.id)
+      .single()
+
+    console.log("Verificación final:", { verificationData, verificationError })
+
+    if (verificationError || !verificationData) {
+      throw new Error("Los datos del usuario no se guardaron correctamente en la base de datos")
+    }
+
+    console.log("✅ Usuario guardado exitosamente en ambas tablas")
+
+    // Paso 5: Guardar datos en localStorage
+    if (authData.session) {
+      localStorage.setItem("token", authData.session.access_token)
+    }
+    localStorage.setItem("primerAcceso", "true")
+
+    // Guardar datos básicos del usuario
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        id: authData.user.id,
+        email: email,
+        nombre: nombre,
+        apellidos: apellidos,
+        tipoUsuario: "Invitado",
+        
+      }),
+    )
+
+    // Restaurar botón
+    submitBtn.innerHTML = originalBtnText
+    submitBtn.disabled = false
+
+    // Cerrar modal
+    const registerModalElement = document.getElementById("registerModal")
+    if (registerModalElement) {
+      const registerModal = bootstrap.Modal.getInstance(registerModalElement)
+      if (registerModal) {
+        registerModal.hide()
+      }
+    }
+
+    // Actualizar la interfaz para mostrar el nombre del usuario
+    if (typeof checkUserSession === "function") {
+      checkUserSession()
+    }
+
+    // Mostrar mensaje de éxito
+    mostrarNotificacion("¡Registro exitoso! Usuario guardado correctamente.", "success")
+
+    // Redirigir a la página de primer acceso
+    setTimeout(() => {
+      window.location.href = "/HTML/index.html"
+    }, 2000)
+  } catch (error) {
+    console.error("❌ Error completo:", error)
+    mostrarNotificacion(`Error al registrar: ${error.message}`, "error")
+
+    // Restaurar botón
+    submitBtn.innerHTML = originalBtnText
+    submitBtn.disabled = false
+  }
+}
+
+// Función para mostrar notificaciones
+function mostrarNotificacion(mensaje, tipo) {
+  // Si existe un sistema de notificaciones, usarlo
+  if (window.toast) {
+    window.toast(mensaje, { type: tipo })
+    return
+  }
+
+  // Si no, usar alert para errores y console.log para éxitos
+  if (tipo === "error") {
+    alert(mensaje)
+  } else {
+    console.log(mensaje)
+    alert(mensaje) // También mostramos alertas para éxitos importantes como el registro
+  }
+}
+
+</script>
    <!-- Scripts de utilidades y debugging -->
     <script src="../../JS/utils/supabaseDebug.js"></script>
 
@@ -726,12 +1194,6 @@
   import { checkUserSession } from '../../JS/auth/userSession.js';
   document.addEventListener('DOMContentLoaded', checkUserSession);
 </script>
-  <script  src="../JS/auth/userSession.js"></script>
-    <script src="/JS/auth/login.js"></script>
-    <script src="/JS/auth/register.js"></script>
-        <script type="module">
-  import { checkUserSession } from '../../JS/auth/userSession.js';
-  document.addEventListener('DOMContentLoaded', checkUserSession);
-</script>
+ 
   </body>
 </html>
