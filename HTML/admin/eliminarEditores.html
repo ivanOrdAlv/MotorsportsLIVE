@@ -12,7 +12,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="../index.html">
+            <a class="navbar-brand" href="../../index.html">
                 <img src="../../assets/logoML.jpeg" alt="MotorsportLIVE Logo" height="40">
                 MotorsportLIVE
             </a>
@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
+                        <a class="nav-link" href="../../index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../noticias/noticias.html">Noticias</a>
@@ -278,7 +278,7 @@
                 <div class="col-md-4 mb-3 mb-md-0">
                     <h5>Enlaces Rápidos</h5>
                     <ul class="list-unstyled">
-                        <li><a href="../index.html" class="text-decoration-none text-muted">Inicio</a></li>
+                        <li><a href="../../index.html" class="text-decoration-none text-muted">Inicio</a></li>
                         <li><a href="../noticias/noticias.html" class="text-decoration-none text-muted">Noticias</a></li>
                         <li><a href="../eventos/eventos.html" class="text-decoration-none text-muted">Eventos</a></li>
                         <li><a href="../pilotos/todosPilotos.html" class="text-decoration-none text-muted">Pilotos</a></li>
@@ -336,7 +336,7 @@
           if (error) throw error;
           
           localStorage.clear();
-          window.location.href = "../index.html";
+          window.location.href = "../../index.html";
         } catch (error) {
           console.error("Error cerrando sesión:", error);
           // Mostrar mensaje al usuario
@@ -349,7 +349,7 @@
         try {
           if (!supabaseClient) {
             console.error('Supabase client no está inicializado');
-            window.location.href = "../index.html";
+            window.location.href = "../../index.html";
             return false;
           }
 
@@ -357,7 +357,7 @@
 
           if (error || !user) {
             console.log("Usuario no autenticado, redirigiendo...");
-            window.location.href = "../index.html";
+            window.location.href = "../../index.html";
             return false;
           }
 
@@ -370,14 +370,14 @@
 
           if (userError || !userData || userData.tipoUsuario !== "Administrador") {
             console.log("Usuario no es administrador, redirigiendo...");
-            window.location.href = "../index.html";
+            window.location.href = "../../index.html";
             return false;
           }
 
           return true;
         } catch (error) {
           console.error("Error verificando acceso:", error);
-          window.location.href = "../index.html";
+          window.location.href = "../../index.html";
           return false;
         }
       }

@@ -23,7 +23,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="./../index.html">
+        <a class="navbar-brand" href="../../index.html">
           <img
             src="../../assets/logoML.jpeg"
             alt="MotorsportLIVE Logo"
@@ -45,7 +45,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="./../index.html">Inicio</a>
+              <a class="nav-link" href="../../index.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="../noticias/noticias.html">Noticias</a>
@@ -552,7 +552,7 @@
             <ul class="list-unstyled">
               <li>
                 <a
-                  href="./../index.html"
+                  href="../../index.html"
                   class="text-decoration-none text-muted"
                   >Inicio</a
                 >
@@ -667,7 +667,7 @@
 
           if (error || !user) {
             console.log("Usuario no autenticado, redirigiendo...");
-            window.location.href = "../index.html";
+            window.location.href = "../../index.html";
             return false;
           }
 
@@ -684,14 +684,14 @@
             userData.tipoUsuario !== "Administrador"
           ) {
             console.log("Usuario no es administrador, redirigiendo...");
-            window.location.href = "../index.html";
+            window.location.href = "../../index.html";
             return false;
           }
 
           return true;
         } catch (error) {
           console.error("Error verificando acceso:", error);
-          window.location.href = "../index.html";
+          window.location.href = "../../index.html";
           return false;
         }
       }
@@ -998,7 +998,7 @@
         try {
           await supabase.auth.signOut();
           localStorage.clear();
-          window.location.href = "../index.html";
+          window.location.href = "../../index.html";
         } catch (error) {
           console.error("Error cerrando sesión:", error);
         }
